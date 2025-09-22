@@ -24,5 +24,194 @@ model Users {
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt @db.Timestamp(6)
 
+  //relations
+  contacts     Contacts?
+  testimonials Testimonials[]
+  orders       Orders[]
+
   @@map("users")
+}
+
+model Contacts {
+  id          Int      @id @default(autoincrement()) @db.Integer
+  contact     String   @db.VarChar(100)
+  description String?  @db.VarChar(255)
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @updatedAt @db.Timestamp(6)
+
+  //Relations
+  userId Int   @unique @db.Integer
+  user   Users @relation(fields: [userId], references: [id])
+
+  @@map("contacts")
+}
+
+model Categories {
+  id          Int      @id @default(autoincrement()) @db.Integer
+  name        String   @db.VarChar(100)
+  description String?  @db.VarChar(255)
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @updatedAt @db.Timestamp(6)
+
+  //Relations
+  Products Products[]
+
+  @@map("categories")
+}
+
+model Products {
+  id          Int      @id @default(autoincrement()) @db.Integer
+  name        String   @db.VarChar(100)
+  description String?  @db.VarChar(255)
+  price       String   @db.VarChar(50)
+  stock       Int      @db.Integer
+  status      Int      @db.Integer
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @updatedAt @db.Timestamp(6)
+
+  //Relations
+  categoryId Int           @db.Integer
+  categories Categories    @relation(fields: [categoryId], references: [id])
+  licenses   LicensesKey[]
+  orderItems OrderItems[]
+
+  @@map("products")
+}
+
+model LicensesKey {
+  id              Int       @id @default(autoincrement()) @db.Integer
+  encryptedKey    String    @db.VarChar(255)
+  keyHash         String    @db.VarChar(255)
+  activationLimit Int       @db.Integer
+  status          Int       @db.Integer
+  soldAt          DateTime? @db.Timestamp(6)
+  createdAt       DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt       DateTime  @updatedAt @db.Timestamp(6)
+
+  //Relations
+  productId  Int       @db.Integer
+  product    Products  @relation(fields: [productId], references: [id])
+  supplierId Int?      @db.Integer
+  supplier   supplier? @relation(fields: [supplierId], references: [id])
+
+  @@map("licenses_key")
+}
+
+model supplier {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  name      String   @db.VarChar(100)
+  contact   String   @db.VarChar(100)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  //Relations
+  licenses LicensesKey[]
+
+  @@map("supplier")
+}
+
+model Orders {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  amount    String   @db.VarChar(50)
+  status    Int      @db.Integer
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  //Relations
+  userId     Int          @db.Integer
+  user       Users        @relation(fields: [userId], references: [id])
+  orderItems OrderItems[]
+  payment    Payments?
+  @@map("orders")
+  @@unique([id, userId])
+}
+
+model OrderItems {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  quantity  Int      @db.Integer
+  price     String   @db.VarChar(50)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  //Relations
+  orderId   Int      @db.Integer
+  order     Orders   @relation(fields: [orderId], references: [id])
+  productId Int      @db.Integer
+  product   Products @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+
+model Testimonials {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  content   String   @db.VarChar(255)
+  rating    Int      @db.Integer
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  //Relations
+  userId Int   @db.Integer
+  user   Users @relation(fields: [userId], references: [id])
+
+  @@map("testimonials")
+}
+
+model Payments {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  amount    String   @db.VarChar(50)
+  method    String   @db.VarChar(50)
+  code      String   @db.VarChar(100)
+  status    Int      @db.Integer
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  //Relations
+  paymentConfirmations PaymentConfirmations?
+  orderId   Int      @db.Integer @unique
+  order     Orders   @relation(fields: [orderId], references: [id])
+
+  @@map("payments")
+}
+
+model PaymentConfirmations {
+  id                Int      @id @default(autoincrement()) @db.Integer
+  bankName          String   @db.VarChar(100)
+  bankAccountName   String   @db.VarChar(100)
+  bankAccountNumber String   @db.VarChar(50)
+  code              String   @db.VarChar(100)
+  status            Int      @db.Integer
+  createdAt         DateTime @default(now()) @db.Timestamp(6)
+  updatedAt         DateTime @updatedAt @db.Timestamp(6)
+
+  //Relations
+  paymentId Int      @db.Integer
+  payment   Payments @relation(fields: [paymentId], references: [id])
+
+  @@unique([paymentId])
+  @@map("payment_confirmations")
+}
+
+model AuditLogs {
+  id         Int      @id @default(autoincrement()) @db.Integer
+  action     String   @db.VarChar(100)
+  details    String?  @db.VarChar(255)
+  actor      String?  @db.VarChar(100)
+  target     String?  @db.VarChar(100)
+  ipAddress  String?  @db.VarChar(50)
+  uaserAgent String?  @db.VarChar(255)
+  createdAt  DateTime @default(now()) @db.Timestamp(6)
+
+  @@map("audit_logs")
+}
+
+model attachment {
+  id                 Int      @id @default(autoincrement()) @db.Integer
+  fileName           String   @db.VarChar(255)
+  fileType           String   @db.VarChar(100)
+  filePath           String   @db.VarChar(255)
+  fileSize           Int      @db.Integer
+  attachmentAbleId   Int      @db.Integer
+  attachmentAbleType String   @db.VarChar(100)
+  createdAt          DateTime @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime @updatedAt @db.Timestamp(6)
 }

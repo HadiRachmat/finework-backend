@@ -131,6 +131,130 @@ exports.Prisma.UsersScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ContactsScalarFieldEnum = {
+  id: 'id',
+  contact: 'contact',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.CategoriesScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProductsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  price: 'price',
+  stock: 'stock',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  categoryId: 'categoryId'
+};
+
+exports.Prisma.LicensesKeyScalarFieldEnum = {
+  id: 'id',
+  encryptedKey: 'encryptedKey',
+  keyHash: 'keyHash',
+  activationLimit: 'activationLimit',
+  status: 'status',
+  soldAt: 'soldAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  productId: 'productId',
+  supplierId: 'supplierId'
+};
+
+exports.Prisma.SupplierScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  contact: 'contact',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrdersScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.OrderItemsScalarFieldEnum = {
+  id: 'id',
+  quantity: 'quantity',
+  price: 'price',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  orderId: 'orderId',
+  productId: 'productId'
+};
+
+exports.Prisma.TestimonialsScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  rating: 'rating',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.PaymentsScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  method: 'method',
+  code: 'code',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  orderId: 'orderId'
+};
+
+exports.Prisma.PaymentConfirmationsScalarFieldEnum = {
+  id: 'id',
+  bankName: 'bankName',
+  bankAccountName: 'bankAccountName',
+  bankAccountNumber: 'bankAccountNumber',
+  code: 'code',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  paymentId: 'paymentId'
+};
+
+exports.Prisma.AuditLogsScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  details: 'details',
+  actor: 'actor',
+  target: 'target',
+  ipAddress: 'ipAddress',
+  uaserAgent: 'uaserAgent',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AttachmentScalarFieldEnum = {
+  id: 'id',
+  fileName: 'fileName',
+  fileType: 'fileType',
+  filePath: 'filePath',
+  fileSize: 'fileSize',
+  attachmentAbleId: 'attachmentAbleId',
+  attachmentAbleType: 'attachmentAbleType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -141,9 +265,26 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-  Users: 'Users'
+  Users: 'Users',
+  Contacts: 'Contacts',
+  Categories: 'Categories',
+  Products: 'Products',
+  LicensesKey: 'LicensesKey',
+  supplier: 'supplier',
+  Orders: 'Orders',
+  OrderItems: 'OrderItems',
+  Testimonials: 'Testimonials',
+  Payments: 'Payments',
+  PaymentConfirmations: 'PaymentConfirmations',
+  AuditLogs: 'AuditLogs',
+  attachment: 'attachment'
 };
 
 /**
