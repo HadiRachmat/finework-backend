@@ -1,5 +1,7 @@
 import express from 'express';
 
+import { AuthMiddleware, AuthRoleMiddleware } from '../../../middleware/AuthMiddleware.js';
+
 const RouterAdmin = express.Router();
 
 // ================= User Routes ==================  //
@@ -13,7 +15,7 @@ const RouterAdmin = express.Router();
  * @desc    Create user by admin, get all users, get user by id, update user, delete user
  * @access  Admin Only
  */
-RouterAdmin.post('/api/admin/users/create', (req, res, next) => {
+RouterAdmin.post('/api/admin/users/create', AuthMiddleware, (req, res, next) => {
   res.status(200).json({ message: 'Get user by admin is under constructor' });
   next();
 });
