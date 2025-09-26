@@ -2,9 +2,6 @@ import ResponseError from '../../../error/ResponseError.js';
 
 export default class Password {
   constructor(password) {
-    if (!password) {
-      throw new ResponseError(400, 'password is required');
-    }
     if (typeof password !== 'string') {
       throw new ResponseError(400, 'password must be a string');
     }

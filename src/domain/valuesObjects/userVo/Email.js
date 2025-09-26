@@ -2,9 +2,6 @@ import ResponseError from '../../../error/ResponseError.js';
 
 export default class Email {
   constructor(email) {
-    if (!email) {
-      throw new ResponseError(400, 'email is required');
-    }
     if (typeof email !== 'string') {
       throw new ResponseError(400, 'email must be a string');
     }
