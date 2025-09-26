@@ -21,7 +21,7 @@ export default class AuthFactory {
       fullname: userFullname.fullname,
       email: userEmail.email,
       password: hashedPassword,
-      role: userRole.role,
+      role: userRole.role || 3,
       status: userStatus.status,
     });
     return user;
@@ -36,7 +36,7 @@ export default class AuthFactory {
       hashedPassword
     );
     if (!isPasswordMatch) {
-      throw new ResponseError(400, 'Invalid email or password');
+      throw new ResponseError(400, 'Invalid password: password does not match');
     }
 
     const login = new UserEntity({

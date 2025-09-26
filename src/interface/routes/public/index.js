@@ -5,5 +5,7 @@ const AuthRoutes = express.Router();
 
 // Register User
 AuthRoutes.post('/api/public/register', AuthController.register);
+AuthRoutes.post('/api/public/login', AuthController.login);
+AuthRoutes.post('/api/public/refresh-token', AuthController.refreshToken);
 
 export default AuthRoutes;

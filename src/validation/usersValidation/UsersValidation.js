@@ -10,8 +10,12 @@ const registerUserSchema = Joi.object({
   }),
   role: Joi.string()
     .valid(CONSTANT.BASE_ROLE_ADMIN, CONSTANT.BASE_ROLE_STAFF, CONSTANT.BASE_ROLE_CUSTOMER)
-    .required(),
-  status: Joi.string().valid(CONSTANT.BASE_STATUS_ACTIVE, CONSTANT.BASE_STATUS_INACTIVE).required(),
+    .default(CONSTANT.BASE_ROLE_CUSTOMER)
+    .optional(),
+  status: Joi.string()
+    .valid(CONSTANT.BASE_STATUS_ACTIVE, CONSTANT.BASE_STATUS_INACTIVE)
+    .required()
+    .default(CONSTANT.BASE_STATUS_ACTIVE),
 });
 
 export { registerUserSchema };

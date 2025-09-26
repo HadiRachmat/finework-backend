@@ -46,7 +46,7 @@ export const AuthMiddleware = async (req, res, next) => {
   }
 };
 
-export const AuthRoleMiddleware = (roles) => {
+export const AuthRoleMiddleware = (...roles) => {
   return (req, res, next) => {
     const userRole = Number(req.user.role);
     if (userRole === CONSTANTS.BASE_ROLE_ADMIN) {
