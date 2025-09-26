@@ -2,7 +2,10 @@ import express from 'express';
 
 import { AuthMiddleware, AuthRoleMiddleware } from '../../../middleware/AuthMiddleware.js';
 import * as CONSTANT from '../../../configuration/Constant.js';
+import upload from '../../../helpers/MulterHelpers.js';
 
+import UserController from '../../controllers/admin/userController/UserController.js';
+import CategoriesController from '../../controllers/admin/categories/CategoriesController.js';
 const RouterAdmin = express.Router();
 
 // ================= User Routes ==================  //
@@ -20,40 +23,30 @@ RouterAdmin.post(
   '/api/admin/users/create',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get user by admin is under constructor' });
-    next();
-  }
+  upload.single('attachment'),
+  UserController.create
 );
 
 RouterAdmin.get(
   '/api/admin/users',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get user by admin is under constructor' });
-    next();
-  }
+  UserController.get
 );
 
 RouterAdmin.get(
   '/api/admin/users/:id',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get by id user by admin is under constructor' });
-    next();
-  }
+  UserController.getById
 );
 
 RouterAdmin.put(
   '/api/admin/users/:id/update',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Update user by admin is under constructor' });
-    next();
-  }
+  upload.single('attachment'),
+  UserController.update
 );
 
 RouterAdmin.delete(
@@ -81,50 +74,37 @@ RouterAdmin.post(
   '/api/admin/Categories/create',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Create category by admin is under constructor' });
-    next();
-  }
+  upload.none(),
+  CategoriesController.create
 );
 
 RouterAdmin.get(
   '/api/admin/Categories',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get categories by admin is under constructor' });
-    next();
-  }
+  CategoriesController.getAll
 );
 
 RouterAdmin.get(
   '/api/admin/Categories/:id',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get by id category by admin is under constructor' });
-    next();
-  }
+  CategoriesController.getById
 );
 
 RouterAdmin.put(
   '/api/admin/Categories/:id/update',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Update category by admin is under constructor' });
-    next();
-  }
+  upload.none(),
+  CategoriesController.update
 );
 
 RouterAdmin.delete(
   '/api/admin/Categories/:id/delete',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Remove category by admin is under constructor' });
-    next();
-  }
+  CategoriesController.remove
 );
 
 // ================= Product Routes ==================  //

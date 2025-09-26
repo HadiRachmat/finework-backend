@@ -92,6 +92,7 @@ export default class UserRepository {
         orders: true,
       },
     });
+    return user ? new UserEntity(user) : null;
   }
 
   static async removeUser(dataId) {

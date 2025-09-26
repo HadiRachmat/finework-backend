@@ -1,7 +1,7 @@
 import UserRepository from '../../../../infrastructure/repository/userRepository/UserRepository.js';
 import AuthFactory from '../../../../domain/factory/Auth/AuthFactory.js';
 import ResponseError from '../../../../error/ResponseError.js';
-import UserMappers from '../../../mappers/userMappers/userMappers.js';
+import UserMappers from '../../../mappers/userMappers/UserMappers.js';
 import logger from '../../../../configuration/logging.js';
 import {
   generateAccessToken,
