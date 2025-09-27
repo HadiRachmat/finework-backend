@@ -1,5 +1,11 @@
 import express from 'express';
 
+import { AuthMiddleware, AuthRoleMiddleware } from '../../../middleware/AuthMiddleware.js';
+import * as CONSTANT from '../../../configuration/Constant.js';
+import upload from '../../../helpers/MulterHelpers.js';
+
+import UserController from '../../controllers/admin/userController/UserController.js';
+import CategoriesController from '../../controllers/admin/categories/CategoriesController.js';
 const RouterAdmin = express.Router();
 
 // ================= User Routes ==================  //
@@ -13,30 +19,45 @@ const RouterAdmin = express.Router();
  * @desc    Create user by admin, get all users, get user by id, update user, delete user
  * @access  Admin Only
  */
-RouterAdmin.post('/api/admin/users/create', (req, res, next) => {
-  res.status(200).json({ message: 'Get user by admin is under constructor' });
-  next();
-});
+RouterAdmin.post(
+  '/api/admin/users/create',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  upload.single('attachment'),
+  UserController.create
+);
 
-RouterAdmin.get('/api/admin/users', (req, res, next) => {
-  res.status(200).json({ message: 'Get user by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/users',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  UserController.get
+);
 
-RouterAdmin.get('/api/admin/users/:id', (req, res, next) => {
-  res.status(200).json({ message: 'Get by id user by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/users/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  UserController.getById
+);
 
-RouterAdmin.put('/api/admin/users/:id/update', (req, res, next) => {
-  res.status(200).json({ message: 'Update user by admin is under constructor' });
-  next();
-});
+RouterAdmin.put(
+  '/api/admin/users/:id/update',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  upload.single('attachment'),
+  UserController.update
+);
 
-RouterAdmin.delete('/api/admin/users/:id/delete', (req, res, next) => {
-  res.status(200).json({ message: 'Remove user by admin is under constructor' });
-  next();
-});
+RouterAdmin.delete(
+  '/api/admin/users/:id/delete',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Remove user by admin is under constructor' });
+    next();
+  }
+);
 
 // ================= Categories Routes ==================  //
 // ======================================================  //
@@ -49,30 +70,42 @@ RouterAdmin.delete('/api/admin/users/:id/delete', (req, res, next) => {
  * @desc    Create, get, get by id, delete, category
  * @access  Admin Only
  */
-RouterAdmin.post('/api/admin/Categories/create', (req, res, next) => {
-  res.status(200).json({ message: 'Create category by admin is under constructor' });
-  next();
-});
+RouterAdmin.post(
+  '/api/admin/Categories/create',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  upload.none(),
+  CategoriesController.create
+);
 
-RouterAdmin.get('/api/admin/Categories', (req, res, next) => {
-  res.status(200).json({ message: 'Get categories by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/Categories',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  CategoriesController.getAll
+);
 
-RouterAdmin.get('/api/admin/Categories/:id', (req, res, next) => {
-  res.status(200).json({ message: 'Get by id category by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/Categories/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  CategoriesController.getById
+);
 
-RouterAdmin.put('/api/admin/Categories/:id/update', (req, res, next) => {
-  res.status(200).json({ message: 'Update category by admin is under constructor' });
-  next();
-});
+RouterAdmin.put(
+  '/api/admin/Categories/:id/update',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  upload.none(),
+  CategoriesController.update
+);
 
-RouterAdmin.delete('/api/admin/Categories/:id/delete', (req, res, next) => {
-  res.status(200).json({ message: 'Remove category by admin is under constructor' });
-  next();
-});
+RouterAdmin.delete(
+  '/api/admin/Categories/:id/delete',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  CategoriesController.remove
+);
 
 // ================= Product Routes ==================  //
 // ===================================================  //
@@ -85,30 +118,55 @@ RouterAdmin.delete('/api/admin/Categories/:id/delete', (req, res, next) => {
  * @desc    Create product by admin, get all products, get product by id, update product, delete product
  * @access  Admin Only
  */
-RouterAdmin.post('/api/admin/products/create', (req, res, next) => {
-  res.status(200).json({ message: 'Create product by admin is under constructor' });
-  next();
-});
+RouterAdmin.post(
+  '/api/admin/products/create',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Create product by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.get('/api/admin/products', (req, res, next) => {
-  res.status(200).json({ message: 'Get products by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/products',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get products by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.get('/api/admin/products/:id', (req, res, next) => {
-  res.status(200).json({ message: 'Get by id product by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/products/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get by id product by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.put('/api/admin/products/:id/update', (req, res, next) => {
-  res.status(200).json({ message: 'Update product by admin is under constructor' });
-  next();
-});
+RouterAdmin.put(
+  '/api/admin/products/:id/update',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Update product by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.delete('/api/admin/products/:id/delete', (req, res, next) => {
-  res.status(200).json({ message: 'Remove product by admin is under constructor' });
-  next();
-});
+RouterAdmin.delete(
+  '/api/admin/products/:id/delete',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Remove product by admin is under constructor' });
+    next();
+  }
+);
 
 // ================= Licenses Routes ==================  //
 // =================================================  //
@@ -121,30 +179,55 @@ RouterAdmin.delete('/api/admin/products/:id/delete', (req, res, next) => {
  * @desc    Create license by admin, get all licenses, get license by id, update license, delete license
  * @access  Admin Only
  */
-RouterAdmin.post('/api/admin/licenses/create', (req, res, next) => {
-  res.status(200).json({ message: 'Create license by admin is under constructor' });
-  next();
-});
+RouterAdmin.post(
+  '/api/admin/licenses/create',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Create license by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.get('/api/admin/licenses', (req, res, next) => {
-  res.status(200).json({ message: 'Get licenses by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/licenses',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get licenses by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.get('/api/admin/licenses/:id', (req, res, next) => {
-  res.status(200).json({ message: 'Get by id license by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/licenses/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get by id license by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.put('/api/admin/licenses/:id/update', (req, res, next) => {
-  res.status(200).json({ message: 'Update license by admin is under constructor' });
-  next();
-});
+RouterAdmin.put(
+  '/api/admin/licenses/:id/update',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Update license by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.delete('/api/admin/licenses/:id/delete', (req, res, next) => {
-  res.status(200).json({ message: 'Remove license by admin is under constructor' });
-  next();
-});
+RouterAdmin.delete(
+  '/api/admin/licenses/:id/delete',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Remove license by admin is under constructor' });
+    next();
+  }
+);
 
 // ================= Suplier Routes ==================  //
 // =================================================  //
@@ -157,30 +240,55 @@ RouterAdmin.delete('/api/admin/licenses/:id/delete', (req, res, next) => {
  * @desc    Create supplier by admin, get all suppliers, get supplier by id, update supplier, delete supplier
  * @access  Admin Only
  */
-RouterAdmin.post('/api/admin/suppliers/create', (req, res, next) => {
-  res.status(200).json({ message: 'Create supplier by admin is under constructor' });
-  next();
-});
+RouterAdmin.post(
+  '/api/admin/suppliers/create',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Create supplier by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.get('/api/admin/suppliers', (req, res, next) => {
-  res.status(200).json({ message: 'Get suppliers by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/suppliers',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get suppliers by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.get('/api/admin/suppliers/:id', (req, res, next) => {
-  res.status(200).json({ message: 'Get by id supplier by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/suppliers/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get by id supplier by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.put('/api/admin/suppliers/:id/update', (req, res, next) => {
-  res.status(200).json({ message: 'Update supplier by admin is under constructor' });
-  next();
-});
+RouterAdmin.put(
+  '/api/admin/suppliers/:id/update',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Update supplier by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.delete('/api/admin/suppliers/:id/delete', (req, res, next) => {
-  res.status(200).json({ message: 'Remove supplier by admin is under constructor' });
-  next();
-});
+RouterAdmin.delete(
+  '/api/admin/suppliers/:id/delete',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Remove supplier by admin is under constructor' });
+    next();
+  }
+);
 
 // ================= Orders Routes ==================  //
 // ==================================================  //
@@ -192,25 +300,45 @@ RouterAdmin.delete('/api/admin/suppliers/:id/delete', (req, res, next) => {
  * @desc    Get all orders, get order by id, update order, delete order
  * @access  Admin Only
  */
-RouterAdmin.get('/api/admin/orders', (req, res, next) => {
-  res.status(200).json({ message: 'Get orders by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/orders',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get orders by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.get('/api/admin/orders/:id', (req, res, next) => {
-  res.status(200).json({ message: 'Get by id order by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/orders/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get by id order by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.put('/api/admin/orders/:id/update', (req, res, next) => {
-  res.status(200).json({ message: 'Update order by admin is under constructor' });
-  next();
-});
+RouterAdmin.put(
+  '/api/admin/orders/:id/update',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Update order by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.delete('/api/admin/orders/:id/delete', (req, res, next) => {
-  res.status(200).json({ message: 'Remove order by admin is under constructor' });
-  next();
-});
+RouterAdmin.delete(
+  '/api/admin/orders/:id/delete',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Remove order by admin is under constructor' });
+    next();
+  }
+);
 
 // ================= Testimonial Routes ==================  //
 // =======================================================  //
@@ -222,25 +350,45 @@ RouterAdmin.delete('/api/admin/orders/:id/delete', (req, res, next) => {
  * @desc    testimonial by admin, get all testimonials, get testimonial by id, update testimonial, delete testimonial
  * @access  Admin Only
  */
-RouterAdmin.get('/api/admin/testimonials', (req, res, next) => {
-  res.status(200).json({ message: 'Get testimonials by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/testimonials',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get testimonials by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.get('/api/admin/testimonials/:id', (req, res, next) => {
-  res.status(200).json({ message: 'Get by id testimonial by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/testimonials/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get by id testimonial by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.put('/api/admin/testimonials/:id/update', (req, res, next) => {
-  res.status(200).json({ message: 'Update testimonial by admin is under constructor' });
-  next();
-});
+RouterAdmin.put(
+  '/api/admin/testimonials/:id/update',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Update testimonial by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.delete('/api/admin/testimonials/:id/delete', (req, res, next) => {
-  res.status(200).json({ message: 'Remove testimonial by admin is under constructor' });
-  next();
-});
+RouterAdmin.delete(
+  '/api/admin/testimonials/:id/delete',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Remove testimonial by admin is under constructor' });
+    next();
+  }
+);
 
 // ================= Payments Routes ==================  //
 // ====================================================  //
@@ -253,30 +401,55 @@ RouterAdmin.delete('/api/admin/testimonials/:id/delete', (req, res, next) => {
  * @desc    get all payments, get payment by id, update payment, delete payment
  * @access  Admin Only
  */
-RouterAdmin.post('/api/admin/payments/create', (req, res, next) => {
-  res.status(200).json({ message: 'Create payment by admin is under constructor' });
-  next();
-});
+RouterAdmin.post(
+  '/api/admin/payments/create',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Create payment by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.get('/api/admin/payments', (req, res, next) => {
-  res.status(200).json({ message: 'Get payments by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/payments',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get payments by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.get('/api/admin/payments/:id', (req, res, next) => {
-  res.status(200).json({ message: 'Get by id payment by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/payments/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get by id payment by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.put('/api/admin/payments/:id/update', (req, res, next) => {
-  res.status(200).json({ message: 'Update payment by admin is under constructor' });
-  next();
-});
+RouterAdmin.put(
+  '/api/admin/payments/:id/update',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Update payment by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.delete('/api/admin/payments/:id/delete', (req, res, next) => {
-  res.status(200).json({ message: 'Remove payment by admin is under constructor' });
-  next();
-});
+RouterAdmin.delete(
+  '/api/admin/payments/:id/delete',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Remove payment by admin is under constructor' });
+    next();
+  }
+);
 
 // ================= Payment Confirmation Routes ==================  //
 // ================================================================ //
@@ -289,30 +462,57 @@ RouterAdmin.delete('/api/admin/payments/:id/delete', (req, res, next) => {
  * @desc    get all payment confirmations, get payment confirmation by id, update payment confirmation, delete payment confirmation
  * @access  Admin Only
  */
-RouterAdmin.post('/api/admin/payment-confirmations/create', (req, res, next) => {
-  res.status(200).json({ message: 'Create payment confirmation by admin is under constructor' });
-  next();
-});
+RouterAdmin.post(
+  '/api/admin/payment-confirmations/create',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Create payment confirmation by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.get('/api/admin/payment-confirmations', (req, res, next) => {
-  res.status(200).json({ message: 'Get payment confirmations by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/payment-confirmations',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get payment confirmations by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.get('/api/admin/payment-confirmations/:id', (req, res, next) => {
-  res.status(200).json({ message: 'Get by id payment confirmation by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/payment-confirmations/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res
+      .status(200)
+      .json({ message: 'Get by id payment confirmation by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.put('/api/admin/payment-confirmations/:id/update', (req, res, next) => {
-  res.status(200).json({ message: 'Update payment confirmation by admin is under constructor' });
-  next();
-});
+RouterAdmin.put(
+  '/api/admin/payment-confirmations/:id/update',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Update payment confirmation by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.delete('/api/admin/payment-confirmations/:id/delete', (req, res, next) => {
-  res.status(200).json({ message: 'Remove payment confirmation by admin is under constructor' });
-  next();
-});
+RouterAdmin.delete(
+  '/api/admin/payment-confirmations/:id/delete',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Remove payment confirmation by admin is under constructor' });
+    next();
+  }
+);
 
 // ================= AuditLog Routes ==================  //
 // =================================================  //
@@ -322,14 +522,24 @@ RouterAdmin.delete('/api/admin/payment-confirmations/:id/delete', (req, res, nex
  * @desc    get all audit logs, get audit log by id
  * @access  Admin Only
  */
-RouterAdmin.get('/api/admin/audit-logs', (req, res, next) => {
-  res.status(200).json({ message: 'Get audit logs by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/audit-logs',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get audit logs by admin is under constructor' });
+    next();
+  }
+);
 
-RouterAdmin.get('/api/admin/audit-logs/:id', (req, res, next) => {
-  res.status(200).json({ message: 'Get by id audit log by admin is under constructor' });
-  next();
-});
+RouterAdmin.get(
+  '/api/admin/audit-logs/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  (req, res, next) => {
+    res.status(200).json({ message: 'Get by id audit log by admin is under constructor' });
+    next();
+  }
+);
 
 export default RouterAdmin;

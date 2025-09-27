@@ -1,0 +1,205 @@
+2025-09-26 22:33:33 [ERROR]: [ERROR] 
+Invalid `prisma.users.create()` invocation:
+
+{
+  data: {
+    id: undefined,
+    fullname: {
+      fullname: "staff 1"
+    },
+    ~~~~~~~~~~~~~~~~~~~~~
+    email: {
+      email: "staff1@example.com"
+    },
+    password: {},
+    role: {
+      role: 2
+    },
+    status: {
+      status: 1
+    },
+    contacts: undefined
+  },
+  select: {
+    id: true,
+    fullname: true,
+    email: true,
+    role: true,
+    status: true,
+    contacts: true,
+    testimonials: true,
+    orders: true
+  }
+}
+
+Argument `fullname`: Invalid value provided. Expected String, provided Object.
+2025-09-26 22:36:51 [ERROR]: [ERROR] 
+Invalid `prisma.users.create()` invocation:
+
+{
+  data: {
+    id: undefined,
+    fullname: "staff 1",
+    email: "staff1@example.com",
+    password: {},
+              ~~
+    role: 2,
+    status: 1,
+    contacts: undefined
+  },
+  select: {
+    id: true,
+    fullname: true,
+    email: true,
+    role: true,
+    status: true,
+    contacts: true,
+    testimonials: true,
+    orders: true
+  }
+}
+
+Argument `password`: Invalid value provided. Expected String, provided Object.
+2025-09-26 22:39:33 [ERROR]: [ERROR] 
+Invalid `prisma.users.create()` invocation:
+
+{
+  data: {
+    id: undefined,
+    fullname: "staff 1",
+    email: "staff1@example.com",
+    password: {},
+              ~~
+    role: 2,
+    status: 1,
+    contacts: undefined
+  },
+  select: {
+    id: true,
+    fullname: true,
+    email: true,
+    role: true,
+    status: true,
+    contacts: true,
+    testimonials: true,
+    orders: true
+  }
+}
+
+Argument `password`: Invalid value provided. Expected String, provided Object.
+2025-09-26 22:40:21 [ERROR]: [ERROR] 
+Invalid `prisma.users.create()` invocation:
+
+{
+  data: {
+    id: undefined,
+    fullname: "staff 1",
+    email: "staff1@example.com",
+    password: {},
+              ~~
+    role: 2,
+    status: 1,
+    contacts: undefined
+  },
+  select: {
+    id: true,
+    fullname: true,
+    email: true,
+    paassword: true,
+    role: true,
+    status: true,
+    contacts: true,
+    testimonials: true,
+    orders: true
+  }
+}
+
+Argument `password`: Invalid value provided. Expected String, provided Object.
+2025-09-26 22:40:44 [ERROR]: [ERROR] 
+Invalid `prisma.users.create()` invocation:
+
+{
+  data: {
+    id: undefined,
+    fullname: "staff 1",
+    email: "staff1@example.com",
+    password: {},
+              ~~
+    role: 2,
+    status: 1,
+    contacts: undefined
+  },
+  select: {
+    id: true,
+    fullname: true,
+    email: true,
+    role: true,
+    status: true,
+    contacts: true,
+    testimonials: true,
+    orders: true
+  }
+}
+
+Argument `password`: Invalid value provided. Expected String, provided Object.
+2025-09-26 23:07:38 [ERROR]: Attachment Factory: {"fileName":{"filename":"typescript.png"},"fileType":{"filetype":"image/png"},"filePath":{"filepath":"/home/hadi-rachmat-s/Documents/Project/finework/app-finework-backend/uploads/1758902858421-183503041-typescript.png"},"fileSize":{"filesize":186561},"attachmentAbleId":{"attachmentAbleId":12},"attachmentAbleType":{"attachmentAbleType":"user"}}
+2025-09-26 23:07:38 [ERROR]: [ERROR] 
+Invalid `prisma.attachment.create()` invocation:
+
+{
+  data: {
+    id: undefined,
+    fileName: {
+      filename: "typescript.png"
+    },
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    fileType: {
+      filetype: "image/png"
+    },
+    filePath: {
+      filepath: "/home/hadi-rachmat-s/Documents/Project/finework/app-finework-backend/uploads/1758902858421-183503041-typescript.png"
+    },
+    fileSize: {
+      filesize: 186561
+    },
+    attachmentAbleId: {
+      attachmentAbleId: 12
+    },
+    attachmentAbleType: {
+      attachmentAbleType: "user"
+    }
+  },
+  select: {
+    id: true,
+    fileName: true,
+    fileType: true,
+    filePath: true,
+    fileSize: true,
+    attachmentAbleId: true,
+    attachmentAbleType: true
+  }
+}
+
+Argument `fileName`: Invalid value provided. Expected String, provided Object.
+2025-09-26 23:08:28 [ERROR]: Attachment Factory: {"fileName":"typescript.png","fileType":"image/png","filePath":"/home/hadi-rachmat-s/Documents/Project/finework/app-finework-backend/uploads/1758902908144-564327730-typescript.png","fileSize":186561,"attachmentAbleId":13,"attachmentAbleType":"user"}
+2025-09-27 00:12:03 [ERROR]: [ERROR] 
+Invalid `prisma.users.findUnique()` invocation:
+
+{
+  where: {
+    id: "1"
+        ~~~
+  },
+  select: {
+    id: true,
+    fullname: true,
+    email: true,
+    role: true,
+    status: true,
+    contacts: true,
+    testimonials: true,
+    orders: true
+  }
+}
+
+Argument `id`: Invalid value provided. Expected Int, provided String.
