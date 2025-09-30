@@ -6,6 +6,8 @@ import upload from '../../../helpers/MulterHelpers.js';
 
 import UserController from '../../controllers/admin/userController/UserController.js';
 import CategoriesController from '../../controllers/admin/categories/CategoriesController.js';
+import ProductController from '../../controllers/admin/product/ProductController.js';
+
 const RouterAdmin = express.Router();
 
 // ================= User Routes ==================  //
@@ -122,50 +124,37 @@ RouterAdmin.post(
   '/api/admin/products/create',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Create product by admin is under constructor' });
-    next();
-  }
+  upload.array('attachment', 10),
+  ProductController.create
 );
 
 RouterAdmin.get(
   '/api/admin/products',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get products by admin is under constructor' });
-    next();
-  }
+  ProductController.get
 );
 
 RouterAdmin.get(
   '/api/admin/products/:id',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get by id product by admin is under constructor' });
-    next();
-  }
+  ProductController.getById
 );
 
 RouterAdmin.put(
   '/api/admin/products/:id/update',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Update product by admin is under constructor' });
-    next();
-  }
+  upload.array('attachment', 10),
+  ProductController.update
 );
 
 RouterAdmin.delete(
   '/api/admin/products/:id/delete',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Remove product by admin is under constructor' });
-    next();
-  }
+  ProductController.remove
 );
 
 // ================= Licenses Routes ==================  //

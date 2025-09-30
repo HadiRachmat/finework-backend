@@ -57,4 +57,24 @@ export default class AttachmentRepository {
 
     return attachment ? new AttachmentEntity(attachment) : null;
   }
+
+  static async findAllAttachment(ableId, ableType) {
+    const attachment = await PrismaClient.attachment.findMany({
+      where: {
+        attachmentAbleId: ableId,
+        attachmentAbleType: ableType,
+      },
+      select: {
+        id: true,
+        fileName: true,
+        fileType: true,
+        filePath: true,
+        fileSize: true,
+        attachmentAbleId: true,
+        attachmentAbleType: true,
+      },
+    });
+
+    return attachment ? attachment.map((att) => new AttachmentEntity(att)) : [];
+  }
 }
