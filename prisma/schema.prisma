@@ -122,8 +122,9 @@ model Orders {
   user       Users        @relation(fields: [userId], references: [id])
   orderItems OrderItems[]
   payment    Payments?
-  @@map("orders")
+
   @@unique([id, userId])
+  @@map("orders")
 }
 
 model OrderItems {
@@ -167,8 +168,8 @@ model Payments {
 
   //Relations
   paymentConfirmations PaymentConfirmations?
-  orderId   Int      @db.Integer @unique
-  order     Orders   @relation(fields: [orderId], references: [id])
+  orderId              Int                   @unique @db.Integer
+  order                Orders                @relation(fields: [orderId], references: [id])
 
   @@map("payments")
 }

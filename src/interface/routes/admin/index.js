@@ -7,7 +7,7 @@ import upload from '../../../helpers/MulterHelpers.js';
 import UserController from '../../controllers/admin/userController/UserController.js';
 import CategoriesController from '../../controllers/admin/categories/CategoriesController.js';
 import ProductController from '../../controllers/admin/product/ProductController.js';
-
+import LicensesKeyController from '../../controllers/admin/licensesKey/LicensesKeyController.js';
 const RouterAdmin = express.Router();
 
 // ================= User Routes ==================  //
@@ -172,10 +172,8 @@ RouterAdmin.post(
   '/api/admin/licenses/create',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Create license by admin is under constructor' });
-    next();
-  }
+  upload.none(),
+  LicensesKeyController.create
 );
 
 RouterAdmin.get(
@@ -192,10 +190,7 @@ RouterAdmin.get(
   '/api/admin/licenses/:id',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get by id license by admin is under constructor' });
-    next();
-  }
+  LicensesKeyController.getById
 );
 
 RouterAdmin.put(
