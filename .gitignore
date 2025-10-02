@@ -1,0 +1,20 @@
+# Node modules
+/node_modules/
+
+# Environment
+.env
+
+# Logs
+/logs/
+*.log
+
+# Generated files
+/generated/
+
+# Uploads
+/uploads/
+
+# OS / Editor
+.DS_Store
+.vscode/
+*.tmp
