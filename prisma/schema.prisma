@@ -28,6 +28,7 @@ model Users {
   contacts     Contacts?
   testimonials Testimonials[]
   orders       Orders[]
+  cart         Carts[]
 
   @@map("users")
 }
@@ -141,6 +142,31 @@ model OrderItems {
   product   Products @relation(fields: [productId], references: [id])
 
   @@map("order_items")
+}
+
+model Carts {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  status    Int      @db.Integer
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  //Relations
+  userId    Int         @unique @db.Integer
+  user      Users       @relation(fields: [userId], references: [id])
+  cartItems CartItems[]
+}
+
+model CartItems {
+  id        Int      @id @default(autoincrement()) @db.Integer
+  quantity  Int      @db.Integer
+  price     String   @db.VarChar(50)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  //Relations
+  cartId    Int   @db.Integer
+  cart      Carts @relation(fields: [cartId], references: [id])
+  productId Int   @db.Integer
 }
 
 model Testimonials {

@@ -8,6 +8,8 @@ import UserController from '../../controllers/admin/userController/UserControlle
 import CategoriesController from '../../controllers/admin/categories/CategoriesController.js';
 import ProductController from '../../controllers/admin/product/ProductController.js';
 import LicensesKeyController from '../../controllers/admin/licensesKey/LicensesKeyController.js';
+import SupplierController from '../../controllers/admin/supplier/SupplierController.js';
+
 const RouterAdmin = express.Router();
 
 // ================= User Routes ==================  //
@@ -228,40 +230,30 @@ RouterAdmin.post(
   '/api/admin/suppliers/create',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Create supplier by admin is under constructor' });
-    next();
-  }
+  upload.none(),
+  SupplierController.create
 );
 
 RouterAdmin.get(
   '/api/admin/suppliers',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get suppliers by admin is under constructor' });
-    next();
-  }
+  SupplierController.getAll
 );
 
 RouterAdmin.get(
   '/api/admin/suppliers/:id',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get by id supplier by admin is under constructor' });
-    next();
-  }
+  SupplierController.getById
 );
 
 RouterAdmin.put(
   '/api/admin/suppliers/:id/update',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Update supplier by admin is under constructor' });
-    next();
-  }
+  upload.none(),
+  SupplierController.update
 );
 
 RouterAdmin.delete(
