@@ -64,7 +64,8 @@ const remove = async (req, res, next) => {
   try {
     const result = await CategoriesServicesAdmin.deleteCategoryByAdmin(dataId);
     res.status(200).json({
-      message: 'Delete Category by Id by Admin',
+      message: 'Delete Category',
+      data: result,
     });
   } catch (error) {
     next(error);

@@ -25,6 +25,33 @@ export default class LicensesKey {
     return licensesEntity;
   }
 
+  static update(request, existingLicense) {
+    let encryptedKey = existingLicense.getEncryptedKey();
+    let keyHash = existingLicense.getKeyHash();
+    let plainText = existingLicense.getPlainText();
+
+    // Jika admin mengirim plainText baru, enkripsi ulang
+    if (request.plainText) {
+      const plainTextVo = new PlainText(request.plainText);
+      const encrypted = LicenseHelper.encryptKey(plainTextVo.plainText);
+      encryptedKey = encrypted.encryptedKey;
+      keyHash = encrypted.keyHash;
+      plainText = plainTextVo.plainText;
+    }
+
+    return new LicensesKeyEntity({
+      id: existingLicense.getId(),
+      plainText,
+      encryptedKey,
+      keyHash,
+      activationLimit: Number(request.activationLimit ?? existingLicense.getActivationLimit()),
+      status: Number(request.status ?? existingLicense.getStatus()),
+      soldAt: request.soldAt ?? existingLicense.getSoldAt(),
+      productId: Number(request.productId ?? existingLicense.getProductId()),
+      supplierId: Number(request.supplierId ?? existingLicense.getSupplier()),
+    });
+  }
+
   // Factory hydrate (dari DB)
   static reconstitute({
     id,

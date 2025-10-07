@@ -29,6 +29,52 @@ export default class LicensesKeyRepository {
     });
   }
 
+  static async findAllLicenses(plainText = false) {
+    const licenses = await PrismaClient.licensesKey.findMany({
+      select: {
+        id: true,
+        encryptedKey: true,
+        keyHash: true,
+        activationLimit: true,
+        status: true,
+        soldAt: true,
+        productId: true,
+        product: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+
+    // return licenses.map((license) => {
+    //   let plainTextValue = null;
+    //   if (plainText) {
+    //     plainTextValue = LicensesHelper.decryptedKey(license.encryptedKey);
+    //   }
+    //   return new LicenseKeyEntity({
+    //     ...license,
+    //     plainText: plainTextValue,
+    //   });
+    // });
+
+    let result = [];
+    for (const license of licenses) {
+      let plainTextValue = null;
+      if (plainText) {
+        plainTextValue = LicensesHelper.decryptedKey(license.encryptedKey);
+      }
+      result.push(
+        new LicenseKeyEntity({
+          ...license,
+          plainText: plainTextValue,
+        })
+      );
+    }
+    return result;
+  }
+
   static async findById(dataId, plainText = false) {
     const license = await PrismaClient.licensesKey.findUnique({
       where: { id: dataId },
@@ -45,7 +91,7 @@ export default class LicensesKeyRepository {
             id: true,
             name: true,
           },
-        }
+        },
       },
     });
     if (!license) return null;
@@ -59,5 +105,44 @@ export default class LicensesKeyRepository {
       ...license,
       plainText: plainTextValue,
     });
+  }
+
+  static async update(id, request) {
+    const { plainText, ...dbData } = request;
+
+    const license = await PrismaClient.licensesKey.update({
+      where: { id },
+      data: dbData,
+      select: {
+        id: true,
+        encryptedKey: true,
+        keyHash: true,
+        activationLimit: true,
+        status: true,
+        soldAt: true,
+        productId: true,
+        product: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+
+    return new LicenseKeyEntity({
+      ...license,
+      plainText: request.plainText, // tetap tambahkan plainText dari request jika ada
+    });
+  }
+
+  static async remove(dataId) {
+    const licenses = await PrismaClient.licensesKey.delete({
+      where: {
+        id: dataId,
+      },
+    });
+
+    return licenses ? new LicenseKeyEntity(licenses) : [];
   }
 }

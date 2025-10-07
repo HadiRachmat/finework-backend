@@ -182,10 +182,7 @@ RouterAdmin.get(
   '/api/admin/licenses',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Get licenses by admin is under constructor' });
-    next();
-  }
+  LicensesKeyController.get
 );
 
 RouterAdmin.get(
@@ -199,20 +196,15 @@ RouterAdmin.put(
   '/api/admin/licenses/:id/update',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Update license by admin is under constructor' });
-    next();
-  }
+  upload.none(),
+  LicensesKeyController.update
 );
 
 RouterAdmin.delete(
   '/api/admin/licenses/:id/delete',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Remove license by admin is under constructor' });
-    next();
-  }
+  LicensesKeyController.remove
 );
 
 // ================= Suplier Routes ==================  //

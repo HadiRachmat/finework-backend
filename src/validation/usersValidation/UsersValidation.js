@@ -48,4 +48,14 @@ const updateUserSchemaByAdmin = Joi.object({
     .default(CONSTANT.BASE_STATUS_ACTIVE),
 });
 
-export { registerUserSchema, createUserSchemaByAdmin, updateUserSchemaByAdmin };
+const updateUserSchemaByCustomer = Joi.object({
+  fullname: Joi.string().min(3).max(30).optional(),
+  email: Joi.string().email().optional(),
+});
+
+export {
+  registerUserSchema,
+  createUserSchemaByAdmin,
+  updateUserSchemaByAdmin,
+  updateUserSchemaByCustomer,
+};

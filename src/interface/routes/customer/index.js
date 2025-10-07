@@ -1,4 +1,9 @@
 import express from 'express';
+import { AuthMiddleware, AuthRoleMiddleware } from '../../../middleware/AuthMiddleware.js';
+import * as CONSTANTS from '../../../configuration/Constant.js';
+
+import UserControllers from '../../controllers/customer/users/UserControllers.js';
+import upload from '../../../helpers/MulterHelpers.js';
 
 const CustomerRoutes = express.Router();
 
@@ -11,18 +16,25 @@ const CustomerRoutes = express.Router();
  * @desc    Get and Update user profile by customer
  * @access  Customer Only
  */
-CustomerRoutes.get('/api/user/customer/user/profile', (req, res, next) => {
-  res.status(200).json({ message: 'get user profile by customer is under constructor' });
-  next();
-});
-CustomerRoutes.put('/api/user/customer/user/profile/update', (req, res, next) => {
-  res.status(200).json({ message: 'update user profile by customer is under constructor' });
-  next();
-});
-CustomerRoutes.delete('/api/user/customer/user/profile/delete', (req, res, next) => {
-  res.status(200).json({ message: 'delete user profile by customer is under constructor' });
-  next();
-});
+CustomerRoutes.get(
+  '/api/user/customer/user/profile',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  UserControllers.getProfile
+);
+CustomerRoutes.put(
+  '/api/user/customer/user/profile/update',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  upload.single('attachment'),
+  UserControllers.updateProfile
+);
+CustomerRoutes.delete(
+  '/api/user/customer/user/profile/delete',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  UserControllers.removeProfileCustomer
+);
 
 //========= CONTACT MANGEMENT ========== //
 //=====================================//
@@ -68,7 +80,7 @@ CustomerRoutes.get('/api/user/customer/product', (req, res, next) => {
   res.status(200).json({ message: 'get product by customer is under constructor' });
   next();
 });
-CustomerRoutes.get('api/customer/product/:id', (req, res, next) => {
+CustomerRoutes.get('/api/customer/product/:id', (req, res, next) => {
   res.status(200).json({ message: 'get product by id by customer is unde constroctor' });
   next();
 });
@@ -112,8 +124,35 @@ CustomerRoutes.get('/api/user/customer/orders/:id', (req, res, next) => {
   next();
 });
 
+//  ================ CART MANAGEMENT ================ //
+//  ================================================= //
+CustomerRoutes.post('/api/user/customer/cart/create', (req, res, next) => {
+  res.status(200).json({ message: 'create cart by customer is under constructor' });
+  next();
+});
+
+CustomerRoutes.get('/api/user/customer/cart', (req, res, next) => {
+  res.status(200).json({ message: 'get all cart by customer is under constructor' });
+  next();
+});
+
+CustomerRoutes.get('/api/user/customer/cart/:id', (req, res, next) => {
+  res.status(200).json({ message: 'get by id cart by customer is under constructor' });
+  next();
+});
+
+CustomerRoutes.put('/api/user/customer/cart/:id/update', (req, res, next) => {
+  res.status(200).json({ message: 'update cart by customer is under constructor' });
+  next();
+});
+
+CustomerRoutes.delete('/api/user/customer/cart/:id/delete', (req, res, next) => {
+  res.status(200).json({ message: 'delete cart by customer is under constructor' });
+  next();
+});
+
 //  ================ PAYMENT MANAGEMENT ================ //
-//  =============================================================  //
+//  ==================================================== //
 /**
  * @route   POST /api/user/customer/payments/create
  * @route   GET /api/user/customer/payments

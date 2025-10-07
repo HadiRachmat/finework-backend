@@ -9,14 +9,113 @@ const StaffRoutes = express.Router();
  * @desc    Get user at role customer by staff
  * @access  Staff Only
  */
-StaffRoutes.get('/api/staff/user/customer', (req, res, next) => {
+StaffRoutes.get('/api/user/staff/user/profile', (req, res, next) => {
   res.status(200).json({ message: 'get user role customer by staff is under constructor' });
   next();
 });
-StaffRoutes.get('/api/staff/user/customer/:id', (req, res, next) => {
+
+StaffRoutes.get('/api/user/staff/user/profile/:id', (req, res, next) => {
   res
     .status(200)
     .json({ message: 'get by id user at role customer by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.put('/api/user/staff/user/profile/:id/update', (req, res, next) => {
+  res.status(200).json({ message: 'update user at role customer by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.delete('/api/user/staff/user/profile/:id/delete', (req, res, next) => {
+  res.status(200).json({ message: 'delete user at role customer by staff is under constructor' });
+  next();
+});
+
+// ================ CONTACT MANAGEMENT ================ //
+// =================================================== //
+/**
+ * @route   POST /api/user/staff/contact/create
+ * @route   GET /api/user/staff/contact
+ * @route   GET /api/user/staff/contact/:id
+ * @route   PUT /api/user/staff/contact/:id/update
+ * @route   DELETE /api/user/staff/contact/:id/delete
+ * @desc    Manage contact messages by staff
+ * @access  Staff Only
+ */
+StaffRoutes.post('/api/user/staff/contact/create', (req, res, next) => {
+  res.status(200).json({ message: 'create contact messages by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.get('/api/user/staff/contact', (req, res, next) => {
+  res.status(200).json({ message: 'get all contact messages by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.get('/api/user/staff/contact/:id', (req, res, next) => {
+  res.status(200).json({ message: 'get by id contact messages by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.put('/api/user/staff/contact/:id/update', (req, res, next) => {
+  res.status(200).json({ message: 'update contact messages by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.delete('/api/user/staff/contact/:id/delete', (req, res, next) => {
+  res.status(200).json({ message: 'delete contact messages by staff is under constructor' });
+  next();
+});
+
+// ================ CATEGORIES MANAGEMENT ================ //
+// =================================================== //
+StaffRoutes.post('/api/user/staff/categories/create', (req, res, next) => {
+  res.status(200).json({ message: 'create categories by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.get('/api/user/staff/categories', (req, res, next) => {
+  res.status(200).json({ message: 'get all categories by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.get('/api/user/staff/categories/:id', (req, res, next) => {
+  res.status(200).json({ message: 'get by id categories by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.put('/api/user/staff/categories/:id/update', (req, res, next) => {
+  res.status(200).json({ message: 'update categories by staff is under constructor' });
+  next();
+});
+
+// ================ PRODUCT MANAGEMENT ================ //
+// =================================================== //
+/**
+ * @route   POST /api/user/staff/product/create
+ * @route   GET /api/user/staff/product
+ * @route   GET /api/user/staff/product/:id
+ * @route   PUT /api/user/staff/product/:id/update
+ * @desc    Manage product by staff
+ * @access  Staff Only
+ */
+StaffRoutes.post('/api/user/staff/product/create', (req, res, next) => {
+  res.status(200).json({ message: 'create product by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.get('/api/user/staff/product', (req, res, next) => {
+  res.status(200).json({ message: 'get all product by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.get('/api/user/staff/product/:id', (req, res, next) => {
+  res.status(200).json({ message: 'get by id product by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.put('/api/user/staff/product/:id/update', (req, res, next) => {
+  res.status(200).json({ message: 'update product by staff is under constructor' });
   next();
 });
 
@@ -42,6 +141,28 @@ StaffRoutes.put('/api/staff/orders/:id/update', (req, res, next) => {
   next();
 });
 
+// ================ PAYMENT MANAGEMENT ================ //
+// ==================================================== //
+/**
+ * @route   GET /api/staff/payment
+ * @route   GET /api/staff/payment/:id
+ * @route   PUT /api/staff/payment/:id/update
+ * @desc    Get all payment by staff
+ * @access  Staff Only
+ */
+StaffRoutes.get('api/staff/payment', (req, res, next) => {
+  res.status(200).json({ message: 'get all payment by staff is under constructor' });
+  next();
+});
+StaffRoutes.get('api/staff/payment/:id', (req, res, next) => {
+  res.status(200).json({ message: 'get by id payment by staff is under constructor' });
+  next();
+});
+StaffRoutes.put('api/staff/payment/:id/update', (req, res, next) => {
+  res.status(200).json({ message: 'update payment by staff is under constructor' });
+  next();
+});
+
 // ================ PAYMENT CONFIRMATION MANAGEMENT ================ //
 // ================================================================= //
 /**
@@ -64,6 +185,27 @@ StaffRoutes.put('/api/staff/payment-confirmations/:id/update', (req, res, next) 
   next();
 });
 
+// ================ TESTIMONIAL MANAGEMENT ================ //
+// ======================================================== //
+StaffRoutes.get('/api/staff/testimonials', (req, res, next) => {
+  res.status(200).json({ message: 'get all testimonials by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.get('/api/staff/testimonials/:id', (req, res, next) => {
+  res.status(200).json({ message: 'get by id testimonials by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.put('/api/staff/testimonials/:id/update', (req, res, next) => {
+  res.status(200).json({ message: 'update testimonials by staff is under constructor' });
+  next();
+});
+
+StaffRoutes.delete('/api/staff/testimonials/:id/delete', (req, res, next) => {
+  res.status(200).json({ message: 'delete testimonials by staff is under constructor' });
+  next();
+});
 
 // ================ AUDIT LOGS MANAGEMENT ================ //
 // ===================================================== //
