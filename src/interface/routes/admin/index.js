@@ -9,6 +9,7 @@ import CategoriesController from '../../controllers/admin/categories/CategoriesC
 import ProductController from '../../controllers/admin/product/ProductController.js';
 import LicensesKeyController from '../../controllers/admin/licensesKey/LicensesKeyController.js';
 import SupplierController from '../../controllers/admin/supplier/SupplierController.js';
+import ContactController from '../../controllers/admin/contact/ContactsController.js';
 
 const RouterAdmin = express.Router();
 
@@ -61,6 +62,42 @@ RouterAdmin.delete(
     res.status(200).json({ message: 'Remove user by admin is under constructor' });
     next();
   }
+);
+
+// ================= Contacts Routes ==================  //
+// ====================================================  //
+
+RouterAdmin.post(
+  '/api/admin/contacts/create',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  upload.none(),
+  ContactController.create
+);
+RouterAdmin.get(
+  '/api/admin/contacts',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  ContactController.get
+);
+RouterAdmin.get(
+  '/api/admin/contacts/:contactId',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  ContactController.getById
+);
+RouterAdmin.put(
+  '/api/admin/contacts/:contactId/update',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  upload.none(),
+  ContactController.update
+);
+RouterAdmin.delete(
+  '/api/admin/contacts/:contactId/delete',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  ContactController.remove
 );
 
 // ================= Categories Routes ==================  //
