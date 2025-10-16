@@ -13,7 +13,7 @@ export const ErrorMiddleware = async (err, req, res, next) => {
         error: err.message,
       })
       .end();
-  }else {
+  } else {
     res
       .status(500)
       .json({

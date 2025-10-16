@@ -1,10 +1,11 @@
 import express from 'express';
 import { AuthMiddleware, AuthRoleMiddleware } from '../../../middleware/AuthMiddleware.js';
 import * as CONSTANTS from '../../../configuration/Constant.js';
-
-import UserControllers from '../../controllers/customer/users/UserControllers.js';
 import upload from '../../../helpers/MulterHelpers.js';
 
+import UserControllers from '../../controllers/customer/users/UserControllers.js';
+import ContactControllers from '../../controllers/customer/contact/ContactController.js';
+import ProductController from '../../controllers/customer/product/ProductController.js';
 const CustomerRoutes = express.Router();
 
 //=============== USER MANAGEMENT ================ //
@@ -47,26 +48,32 @@ CustomerRoutes.delete(
  * @desc    Create contact messages by customer
  * @access  Customer Only
  */
-CustomerRoutes.post('/api/user/customer/contact/create', (req, res, next) => {
-  res.status(200).json({ message: 'create contact messages by customer is under constructor' });
-  next();
-});
-CustomerRoutes.get('/api/user/customer/contact', (req, res, next) => {
-  res.status(200).json({ message: 'get all contact messages by customer is under constructor' });
-  next();
-});
-CustomerRoutes.get('/api/user/customer/contact/:id', (req, res, next) => {
-  res.status(200).json({ message: 'get by id contact messages by customer is under constructor' });
-  next();
-});
-CustomerRoutes.put('/api/user/customer/contact/:id/update', (req, res, next) => {
-  res.status(200).json({ message: 'update contact messages by customer is under constructor' });
-  next();
-});
-CustomerRoutes.delete('/api/user/customer/contact/:id/delete', (req, res, next) => {
-  res.status(200).json({ message: 'delete contact messages by customer is under constructor' });
-  next();
-});
+CustomerRoutes.post(
+  '/api/user/customer/contact/create',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  upload.none(),
+  ContactControllers.create
+);
+CustomerRoutes.get(
+  '/api/user/customer/contact',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  ContactControllers.getByUserId
+);
+CustomerRoutes.put(
+  '/api/user/customer/contact/:id/update',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  upload.none(),
+  ContactControllers.update
+);
+CustomerRoutes.delete(
+  '/api/user/customer/contact/:id/delete',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  ContactControllers.remove
+);
 
 //  ================ PRODUCT MANAGEMENT ================  //
 //  ====================================================  //
@@ -76,14 +83,18 @@ CustomerRoutes.delete('/api/user/customer/contact/:id/delete', (req, res, next) 
  * @desc    Get product by customer
  * @access  Customer Only
  */
-CustomerRoutes.get('/api/user/customer/product', (req, res, next) => {
-  res.status(200).json({ message: 'get product by customer is under constructor' });
-  next();
-});
-CustomerRoutes.get('/api/customer/product/:id', (req, res, next) => {
-  res.status(200).json({ message: 'get product by id by customer is unde constroctor' });
-  next();
-});
+CustomerRoutes.get(
+  '/api/user/customer/product',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  ProductController.get
+);
+CustomerRoutes.get(
+  '/api/user/customer/product/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  ProductController.getById
+);
 
 //  ================ CATEGORIES MANAGEMENT ================  //
 //  =======================================================  //

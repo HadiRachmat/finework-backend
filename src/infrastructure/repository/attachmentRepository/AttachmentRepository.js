@@ -59,9 +59,10 @@ export default class AttachmentRepository {
   }
 
   static async findAllAttachment(ableId, ableType) {
+    const condition = Array.isArray(ableId) ? { in: ableId } : ableId;
     const attachment = await PrismaClient.attachment.findMany({
       where: {
-        attachmentAbleId: ableId,
+        attachmentAbleId: condition,
         attachmentAbleType: ableType,
       },
       select: {

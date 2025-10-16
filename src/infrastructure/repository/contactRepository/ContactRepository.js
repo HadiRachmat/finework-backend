@@ -44,6 +44,28 @@ export default class ContactRepository {
     return contact ? new ContactEntity(contact) : null;
   }
 
+  static async findFirstByUserId(userId) {
+    const Contact = await PrismaClient.contacts.findFirst({
+      where: {
+        userId: userId,
+      },
+      select: {
+        id: true,
+        contact: true,
+        description: true,
+        userId: true,
+        user: {
+          select: {
+            id: true,
+            fullname: true,
+            email: true,
+          },
+        },
+      },
+    });
+    return Contact ? new ContactEntity(Contact) : null;
+  }
+
   static async findAll() {
     const contacts = await PrismaClient.contacts.findMany({
       select: {

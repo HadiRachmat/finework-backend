@@ -6,4 +6,9 @@ const contactsSchemaValidation = Joi.object({
   description: Joi.string().allow(null, ''),
 });
 
-export { contactsSchemaValidation };
+const createContactSchemaCustomerValidation = Joi.object({
+  contact: Joi.string().required(),
+  description: Joi.string().allow(null, ''),
+});
+
+export { contactsSchemaValidation, createContactSchemaCustomerValidation };
