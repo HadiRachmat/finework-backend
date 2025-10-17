@@ -122,14 +122,14 @@ RouterAdmin.post(
 RouterAdmin.get(
   '/api/admin/Categories',
   AuthMiddleware,
-  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN, CONSTANT.BASE_ROLE_CUSTOMER),
   CategoriesController.getAll
 );
 
 RouterAdmin.get(
   '/api/admin/Categories/:id',
   AuthMiddleware,
-  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
+  AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN, CONSTANT.BASE_ROLE_CUSTOMER),
   CategoriesController.getById
 );
 

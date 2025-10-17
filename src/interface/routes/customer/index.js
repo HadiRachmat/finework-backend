@@ -6,6 +6,7 @@ import upload from '../../../helpers/MulterHelpers.js';
 import UserControllers from '../../controllers/customer/users/UserControllers.js';
 import ContactControllers from '../../controllers/customer/contact/ContactController.js';
 import ProductController from '../../controllers/customer/product/ProductController.js';
+import OrderCustomerController from '../../controllers/customer/orders/ordersController.js';
 const CustomerRoutes = express.Router();
 
 //=============== USER MANAGEMENT ================ //
@@ -104,14 +105,14 @@ CustomerRoutes.get(
  * @desc    Get categories by customer
  * @access  Customer Only
  */
-CustomerRoutes.get('/api/user/customer/categories', (req, res, next) => {
-  res.status(200).json({ message: 'get categories by customer is under constructor' });
-  next();
-});
-CustomerRoutes.get('/api/user/customer/categories/:id', (req, res, next) => {
-  res.status(200).json({ message: 'get categories by id by customer is under constructor' });
-  next();
-});
+// CustomerRoutes.get('/api/user/customer/categories', (req, res, next) => {
+//   res.status(200).json({ message: 'get categories by customer is under constructor' });
+//   next();
+// });
+// CustomerRoutes.get('/api/user/customer/categories/:id', (req, res, next) => {
+//   res.status(200).json({ message: 'get categories by id by customer is under constructor' });
+//   next();
+// });
 
 //  ================ ORDERS MANAGEMENT ================  //
 //  ===================================================  //
@@ -122,10 +123,13 @@ CustomerRoutes.get('/api/user/customer/categories/:id', (req, res, next) => {
  * @desc    Create and Get orders by customer
  * @access  Customer Only
  */
-CustomerRoutes.post('/api/user/customer/orders/create', (req, res, next) => {
-  res.status(200).json({ message: 'create orders by customer is under constructor' });
-  next();
-});
+CustomerRoutes.post(
+  '/api/user/customer/orders/create',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  upload.none(),
+  OrderCustomerController.create
+);
 CustomerRoutes.get('/api/user/customer/orders', (req, res, next) => {
   res.status(200).json({ message: 'get all orders by customer is under constructor' });
   next();

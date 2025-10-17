@@ -54,6 +54,26 @@ export default class ProductRepository {
     return products ? products.map((product) => new ProductEntity(product)) : [];
   }
 
+  static async findAllForOrder(id) {
+    const conditions = Array.isArray(id) ? { in: id } : id;
+    const products = await PrismaClient.products.findMany({
+      where: {
+        id: conditions,
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        price: true,
+        stock: true,
+        status: true,
+        categoryId: true,
+      },
+    });
+  
+    return products ? products.map((product) => new ProductEntity(product)) : [];
+  }
+
   static async update(dataId, request) {
     const product = await PrismaClient.products.update({
       where: {
