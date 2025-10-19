@@ -128,7 +128,7 @@ CustomerRoutes.post(
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
   upload.none(),
-  OrderCustomerController.create
+  OrderCustomerController.createCurrentOrder
 );
 CustomerRoutes.get('/api/user/customer/orders', (req, res, next) => {
   res.status(200).json({ message: 'get all orders by customer is under constructor' });

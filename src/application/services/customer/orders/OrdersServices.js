@@ -1,51 +1,49 @@
 import OrderFactory from '../../../../domain/factory/Customers/OrderFactory.js';
 import OrderRepository from '../../../../infrastructure/repository/ordersRepository/OrdersRepository.js';
 import ProductRepository from '../../../../infrastructure/repository/productsRepository/ProductRepository.js';
+import OrdersMappers from '../../../mappers/orderMappers/OrdersMappers.js';
 import ResponseError from '../../../../error/ResponseError.js';
 import logger from '../../../../configuration/logging.js';
+import OrderItemsFactory from '../../../../domain/factory/Customers/OrderItemsFactory.js';
 
-const createOrderByCustomer = async (userId, request) => {
-  const orders = request.orders; // ambil array items dari body
-
-  if (!orders || !Array.isArray(orders) || orders.length === 0) {
-    throw new ResponseError(400, 'Items must be a non-empty array');
-  }
-  const findProductsId = orders.map((item) => item.productId);
-  const productRepository = await ProductRepository.findAllForOrder(findProductsId);
-
-  if (productRepository.length !== findProductsId.length) {
-    throw new ResponseError(400, 'One or more products not found');
+const createCurrentOrderByCustomer = async (userId, request) => {
+  const productRepository = await ProductRepository.findById(Number(request.productId));
+  if (!productRepository) {
+    throw new ResponseError(404, `Product with ID ${request.productId} not found`);
   }
 
-  const requestOrderFactory = OrderFactory.create({
+  const orderItems = OrderItemsFactory.create({
+    product: productRepository,
+    quantity: Number(request.quantity),
+  });
+  const order = OrderFactory.create({
     userId,
-    orders: request.orders, // karena di body kamu pakai key "orders"
-    products: productRepository,
+    orderItems: [orderItems],
   });
 
   const orderRequestData = {
-    userId: requestOrderFactory.getUserId(),
-    amount: requestOrderFactory.getAmount(),
-    status: requestOrderFactory.getStatus(),
+    userId: order.userId,
+    amount: order.getAmount(),
+    status: order.getStatus(),
     orderItems: {
-      create: requestOrderFactory.getOrderItems().map((items) => ({
+      create: order.getOrderItems().map((items) => ({
         productId: items.getProductId(),
         quantity: items.getQuantity(),
         price: items.getPrice(),
       })),
     },
   };
-
-  const createNewOrder = await OrderRepository.createOrder(orderRequestData);
-
+  
+  const createOrder = await OrderRepository.createOrder(orderRequestData);
+  
   const finalData = {
     message: 'Order created successfully',
-    order: createNewOrder,
+    data: OrdersMappers.toDTO(createOrder),
   };
 
   return finalData;
 };
 
 export default {
-  createOrderByCustomer,
+  createCurrentOrderByCustomer,
 };

@@ -7,21 +7,13 @@ export default class OrdersDTO {
     this.orderItems = orderItems;
   }
 
-  static async fromEntity(orderEntity) {
-    const orderItems = orderEntity.getOrderItems().map((item) => ({
-      id: item.getId(),
-      quantity: item.getQuantity(),
-      price: item.getPrice(),
-      orderId: item.getOrderId(),
-      productId: item.getProductId(),
-    }));
-
+  static fromEntity(orderEntity) {
     return new OrdersDTO({
       id: orderEntity.getId(),
       amount: orderEntity.getAmount(),
       status: orderEntity.getStatus(),
       userId: orderEntity.getUserId(),
-      orderItems,
+      orderItems: orderEntity.getOrderItems(),
     });
   }
 }

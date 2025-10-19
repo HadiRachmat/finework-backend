@@ -1,9 +1,8 @@
 export default class OrdersItemsEntity {
-  constructor({ id, quantity, price, orderId, productId }) {
+  constructor({ id, quantity, price, productId }) {
     this.id = id;
     this.quantity = quantity;
     this.price = price;
-    this.orderId = orderId;
     this.productId = productId;
   }
 
@@ -17,10 +16,6 @@ export default class OrdersItemsEntity {
 
   getPrice() {
     return this.price;
-  }
-
-  getOrderId() {
-    return this.orderId;
   }
 
   getProductId() {
