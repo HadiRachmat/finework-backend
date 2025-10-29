@@ -152,7 +152,7 @@ model Carts {
 
   //Relations
   userId    Int         @unique @db.Integer
-  user      Users       @relation(fields: [userId], references: [id])
+  user      Users      @relation(fields: [userId], references: [id])
   cartItems CartItems[]
 }
 

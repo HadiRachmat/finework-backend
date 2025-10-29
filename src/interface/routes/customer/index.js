@@ -7,6 +7,7 @@ import UserControllers from '../../controllers/customer/users/UserControllers.js
 import ContactControllers from '../../controllers/customer/contact/ContactController.js';
 import ProductController from '../../controllers/customer/product/ProductController.js';
 import OrderCustomerController from '../../controllers/customer/orders/ordersController.js';
+import CartController from '../../controllers/customer/cart/CartController.js';
 const CustomerRoutes = express.Router();
 
 //=============== USER MANAGEMENT ================ //
@@ -141,10 +142,13 @@ CustomerRoutes.get('/api/user/customer/orders/:id', (req, res, next) => {
 
 //  ================ CART MANAGEMENT ================ //
 //  ================================================= //
-CustomerRoutes.post('/api/user/customer/cart/create', (req, res, next) => {
-  res.status(200).json({ message: 'create cart by customer is under constructor' });
-  next();
-});
+CustomerRoutes.post(
+  '/api/user/customer/cart/create',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  upload.none(),
+  CartController.create
+);
 
 CustomerRoutes.get('/api/user/customer/cart', (req, res, next) => {
   res.status(200).json({ message: 'get all cart by customer is under constructor' });
