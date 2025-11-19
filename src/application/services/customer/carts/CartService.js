@@ -5,17 +5,31 @@ import CartItemMappers from '../../../../application/mappers/cartItemMappers/Car
 import ProductRepository from '../../../../infrastructure/repository/productsRepository/ProductRepository.js';
 import CartMappers from '../../../../application/mappers/cartMappers/CartMappers.js';
 import ResponseError from '../../../../error/ResponseError.js';
+import * as CONSTANT from '../../../../configuration/Constant.js';
 
 const createCartService = async (userId, request) => {
   const cartRequestFactory = CartsFactory.createCart({
     userId: userId,
-    status: request.status,
+    // jika client tidak mengirim status, gunakan default BASE_CART_STATUS_OPEN
+    status: request.status ?? CONSTANT.BASE_CART_STATUS_OPEN,
     // cartItems: request.cartItems,
   });
+  // Ambil product dari DB supaya price authoritative (jangan percaya input client)
+  const product = await ProductRepository.findById(request.productId);
+  if (!product) {
+    throw new ResponseError(404, `Product with ID ${request.productId} not found`);
+  }
+
+  // optional: cek stock saat menambah ke cart
+  if (product.stock != null && product.stock < request.quantity) {
+    throw new ResponseError(400, `Insufficient stock for product ID ${request.productId}`);
+  }
+
   const cartItemsRequestFactory = CartsFactory.createCartItem({
     productId: request.productId,
     quantity: request.quantity,
-    price: request.price,
+    // ambil price dari product di DB (authoritative)
+    price: product.price,
   });
 
   const cart = await CartsRepository.createCartTransaction(async (tx) => {

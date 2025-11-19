@@ -86,8 +86,43 @@ export default class OrderRepository {
     return orders
       ? {
           orders: orders.map((order) => new OrdersEntity(order)),
-          users: orders.map((order) => (order.user ? new UserEntity(order[0].user) : null)),
+          users: orders.map((order) => (order.user ? new UserEntity(order.user) : null)),
         }
       : null;
+  }
+
+  static async findOrdersByUserId(userId) {
+    const orders = await PrismaClient.orders.findMany({
+      where: { userId },
+      select: {
+        id: true,
+        amount: true,
+        status: true,
+        userId: true,
+        orderItems: {
+          select: {
+            id: true,
+            quantity: true,
+            price: true,
+            productId: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            fullname: true,
+            email: true,
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return orders
+      ? orders.map((o) => ({
+          order: new OrdersEntity(o),
+          user: o.user ? new UserEntity(o.user) : null,
+        }))
+      : [];
   }
 }

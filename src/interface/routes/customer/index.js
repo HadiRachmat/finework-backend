@@ -131,10 +131,19 @@ CustomerRoutes.post(
   upload.none(),
   OrderCustomerController.createCurrentOrder
 );
-CustomerRoutes.get('/api/user/customer/orders', (req, res, next) => {
-  res.status(200).json({ message: 'get all orders by customer is under constructor' });
-  next();
-});
+CustomerRoutes.post(
+  '/api/user/customer/orders/from-cart',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  upload.none(),
+  OrderCustomerController.createOrderFromCart
+);
+CustomerRoutes.get(
+  '/api/user/customer/orders',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  OrderCustomerController.getOrdersByCustomer
+);
 CustomerRoutes.get('/api/user/customer/orders/:id', (req, res, next) => {
   res.status(200).json({ message: 'get by id orders by customer is under constructor' });
   next();
