@@ -1,18 +1,24 @@
-import Name from '../../valuesObjects/supplierVo/name.js';
-import Contact from '../../valuesObjects/supplierVo/contact.js';
+import SupplierName from '../../valuesObjects/supplierVo/SupplierName.js';
+import ContactPerson from '../../valuesObjects/supplierVo/ContactPerson.js';
+import Email from '../../valuesObjects/supplierVo/Email.js';
+import PhoneNumber from '../../valuesObjects/supplierVo/PhoneNumber.js';
 import SupplierEntity from '../../entities/supplierEntity/SuplierEntity.js';
 
 export default class SupplierFactory {
-  static create({ id, name, contact }) {
-    const cleanContact = typeof contact === 'string' ? contact.trim() : contact;
+  static create({ id, supplierName, contactPerson, email, phoneNumber }) {
+    const cleanContact = typeof contactPerson === 'string' ? contactPerson.trim() : ContactPerson;
 
-    const supplierNameVo = new Name(name);
-    const supplierContactVo = new Contact(cleanContact);
+    const supplierNameVo = new SupplierName(supplierName);
+    const contactPersonVo = new ContactPerson(cleanContact);
+    const emailVo = new Email(email);
+    const phoneNumberVo = new PhoneNumber(phoneNumber);
 
     return new SupplierEntity({
       id,
-      name: supplierNameVo.name,
-      contact: supplierContactVo.contact,
+      supplierName: supplierNameVo.supplierName,
+      contactPerson: contactPersonVo.contactPerson,
+      email: emailVo.email,
+      phoneNumber: phoneNumberVo.phoneNumber,
     });
   }
 

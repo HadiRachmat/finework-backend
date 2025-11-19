@@ -99,11 +99,13 @@ model LicensesKey {
 }
 
 model supplier {
-  id        Int      @id @default(autoincrement()) @db.Integer
-  name      String   @db.VarChar(100)
-  contact   String   @db.VarChar(100)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @updatedAt @db.Timestamp(6)
+  id            Int      @id @default(autoincrement()) @db.Integer
+  supplierName  String   @db.VarChar(100)
+  contactPerson String   @db.VarChar(100)
+  email         String?  @db.VarChar(100)
+  phoneNumber   String?  @db.VarChar(50)
+  createdAt     DateTime @default(now()) @db.Timestamp(6)
+  updatedAt     DateTime @updatedAt @db.Timestamp(6)
 
   //Relations
   licenses LicensesKey[]
@@ -152,7 +154,7 @@ model Carts {
 
   //Relations
   userId    Int         @unique @db.Integer
-  user      Users      @relation(fields: [userId], references: [id])
+  user      Users       @relation(fields: [userId], references: [id])
   cartItems CartItems[]
 }
 

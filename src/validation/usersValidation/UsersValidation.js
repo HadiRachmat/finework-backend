@@ -14,7 +14,7 @@ const registerUserSchema = Joi.object({
     .optional(),
   status: Joi.string()
     .valid(CONSTANT.BASE_STATUS_ACTIVE, CONSTANT.BASE_STATUS_INACTIVE)
-    .required()
+    .optional()
     .default(CONSTANT.BASE_STATUS_ACTIVE),
 });
 

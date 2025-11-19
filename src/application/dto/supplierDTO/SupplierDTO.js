@@ -1,15 +1,19 @@
 export default class SupplierDTO {
-  constructor({ id, name, contact }) {
+  constructor({ id, supplierName, contactPerson, email, phoneNumber }) {
     this.id = id;
-    this.name = name;
-    this.contact = contact;
+    this.supplierName = supplierName;
+    this.contactPerson = contactPerson;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
   }
 
   static fromEntity(supplierEntity) {
     return new SupplierDTO({
       id: supplierEntity.getId(),
-      name: supplierEntity.getName(),
-      contact: supplierEntity.getContact(),
+      supplierName: supplierEntity.getSupplierName(),
+      contactPerson: supplierEntity.getContactPerson(),
+      email: supplierEntity.getEmail(),
+      phoneNumber: supplierEntity.getPhoneNumber(),
     });
   }
 }

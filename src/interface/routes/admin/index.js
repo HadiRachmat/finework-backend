@@ -112,7 +112,7 @@ RouterAdmin.delete(
  * @access  Admin Only
  */
 RouterAdmin.post(
-  '/api/admin/Categories/create',
+  '/api/admin/categories/create',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
   upload.none(),
@@ -120,21 +120,21 @@ RouterAdmin.post(
 );
 
 RouterAdmin.get(
-  '/api/admin/Categories',
+  '/api/admin/categories',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN, CONSTANT.BASE_ROLE_CUSTOMER),
   CategoriesController.getAll
 );
 
 RouterAdmin.get(
-  '/api/admin/Categories/:id',
+  '/api/admin/categories/:id',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN, CONSTANT.BASE_ROLE_CUSTOMER),
   CategoriesController.getById
 );
 
 RouterAdmin.put(
-  '/api/admin/Categories/:id/update',
+  '/api/admin/categories/:id/update',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
   upload.none(),
@@ -142,7 +142,7 @@ RouterAdmin.put(
 );
 
 RouterAdmin.delete(
-  '/api/admin/Categories/:id/delete',
+  '/api/admin/categories/:id/delete',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
   CategoriesController.remove

@@ -1,10 +1,11 @@
 export default class OrdersEntity {
-  constructor({ id, amount, status, userId, orderItems = [] }) {
+  constructor({ id, amount, status, userId, user, orderItems }) {
     this.id = id;
     this.amount = amount;
     this.status = status;
     this.userId = userId;
-    this.orderItems = orderItems;
+    this.user = user ?? null;
+    this.orderItems = orderItems ?? null;
   }
 
   getId() {

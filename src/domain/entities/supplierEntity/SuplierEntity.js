@@ -1,19 +1,29 @@
 export default class SupplierEntity {
-  constructor({ id, name, contact }) {
+  constructor({ id, supplierName, contactPerson, email, phoneNumber }) {
     this.id = id;
-    this.name = name;
-    this.contact = contact;
+    this.supplierName = supplierName;
+    this.contactPerson = contactPerson;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
   }
 
   getId() {
     return this.id;
   }
 
-  getName() {
-    return this.name;
+  getSupplierName() {
+    return this.supplierName;
   }
 
-  getContact() {
-    return this.contact;
+  getContactPerson() {
+    return this.contactPerson;
+  }
+
+  getEmail() {
+    return this.email;
+  }
+
+  getPhoneNumber() {
+    return this.phoneNumber;
   }
 }

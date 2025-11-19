@@ -7,8 +7,10 @@ export default class SupplierRepository {
       data: request,
       select: {
         id: true,
-        name: true,
-        contact: true,
+        supplierName: true,
+        contactPerson: true,
+        email: true,
+        phoneNumber: true,
       },
     });
     return new SupplierEntity(supplier);
@@ -18,8 +20,10 @@ export default class SupplierRepository {
     const suppliers = await PrismaClient.supplier.findMany({
       select: {
         id: true,
-        name: true,
-        contact: true,
+        supplierName: true,
+        contactPerson: true,
+        email: true,
+        phoneNumber: true,
       },
     });
     return suppliers.map((supplier) => new SupplierEntity(supplier));
@@ -32,8 +36,10 @@ export default class SupplierRepository {
       },
       select: {
         id: true,
-        name: true,
-        contact: true,
+        supplierName: true,
+        contactPerson: true,
+        email: true,
+        phoneNumber: true,
       },
     });
 
@@ -48,8 +54,10 @@ export default class SupplierRepository {
       data: request,
       select: {
         id: true,
-        name: true,
-        contact: true,
+        supplierName: true,
+        contactPerson: true,
+        email: true,
+        phoneNumber: true,
       },
     });
 
@@ -63,8 +71,10 @@ export default class SupplierRepository {
       },
       select: {
         id: true,
-        name: true,
-        contact: true,
+        supplierName: true,
+        contactPerson: true,
+        email: true,
+        phoneNumber: true,
       },
     });
 

@@ -4,7 +4,7 @@ import OrdersItemsEntity from '../../entities/orderItemEntity/OrderItemEntity.js
 import ResponseError from '../../../error/ResponseError.js';
 
 export default class OrderItemsFactory {
-  static create({ id, product, quantity }) {
+  static create({ id, product, quantity, orderId }) {
     const quantityVo = new Quantity(quantity);
     const priceVo = new Price(product.price);
 
@@ -17,6 +17,7 @@ export default class OrderItemsFactory {
       quantity: quantityVo.quantity,
       price: priceVo.price,
       productId: product.id,
+      orderId: orderId,
     });
     return orderItemsEntity;
   }
