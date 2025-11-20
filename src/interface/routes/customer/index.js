@@ -159,15 +159,19 @@ CustomerRoutes.post(
   CartController.create
 );
 
-CustomerRoutes.get('/api/user/customer/cart', (req, res, next) => {
-  res.status(200).json({ message: 'get all cart by customer is under constructor' });
-  next();
-});
+CustomerRoutes.get(
+  '/api/user/customer/cart',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  CartController.getAll
+);
 
-CustomerRoutes.get('/api/user/customer/cart/:id', (req, res, next) => {
-  res.status(200).json({ message: 'get by id cart by customer is under constructor' });
-  next();
-});
+CustomerRoutes.get(
+  '/api/user/customer/cart/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  CartController.getById
+);
 
 CustomerRoutes.put('/api/user/customer/cart/:id/update', (req, res, next) => {
   res.status(200).json({ message: 'update cart by customer is under constructor' });

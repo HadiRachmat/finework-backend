@@ -16,6 +16,38 @@ export default class CartsRepository {
     return cart ? new CartEntity(cart) : null;
   }
 
+  static async findAllCartsWithoutTx(userId) {
+    const carts = await PrismaClient.carts.findMany({
+      where: {
+        userId: userId,
+      },
+      select: {
+        id: true,
+        status: true,
+        userId: true,
+        cartItems: true,
+      },
+    });
+    return carts ? carts.map((cart) => new CartEntity(cart)) : [];
+  }
+
+  static async findByIdWithoutTx(cartId, userId) {
+    const cart = await PrismaClient.carts.findUnique({
+      where: {
+        id: cartId,
+        userId: userId,
+      },
+      select: {
+        id: true,
+        status: true,
+        userId: true,
+        cartItems: true,
+      },
+    });
+
+    return cart ? new CartEntity(cart) : null;
+  }
+
   static async findCartByUserId(tx, userId) {
     const cart = await tx.carts.findUnique({
       where: {

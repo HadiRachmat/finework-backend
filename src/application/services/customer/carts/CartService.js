@@ -6,6 +6,7 @@ import ProductRepository from '../../../../infrastructure/repository/productsRep
 import CartMappers from '../../../../application/mappers/cartMappers/CartMappers.js';
 import ResponseError from '../../../../error/ResponseError.js';
 import * as CONSTANT from '../../../../configuration/Constant.js';
+import UserRepository from '../../../../infrastructure/repository/userRepository/UserRepository.js';
 
 const createCartService = async (userId, request) => {
   const cartRequestFactory = CartsFactory.createCart({
@@ -14,6 +15,7 @@ const createCartService = async (userId, request) => {
     status: request.status ?? CONSTANT.BASE_CART_STATUS_OPEN,
     // cartItems: request.cartItems,
   });
+
   // Ambil product dari DB supaya price authoritative (jangan percaya input client)
   const product = await ProductRepository.findById(request.productId);
   if (!product) {
@@ -88,4 +90,27 @@ const createCartService = async (userId, request) => {
   return finalData;
 };
 
-export default { createCartService };
+const getAllCartsCustomer = async (userId) => {
+  const carts = await CartsRepository.findAllCartsWithoutTx(userId);
+  return {
+    message: 'Success Get All Carts',
+    data: carts.map((cart) => CartMappers.toDTO(cart)),
+  };
+};
+
+const getByIdCartCustomer = async (userId, cartId) => {
+  const userCustomer = await UserRepository.findById(userId);
+  if (!userCustomer) {
+    throw new ResponseError(404, `User with ID ${userId} not found`);
+  }
+  const cart = await CartsRepository.findByIdWithoutTx(cartId, userCustomer.getId());
+  if (!cart) {
+    throw new ResponseError(404, `Cart  not found for User ID ${userId}`);
+  }
+  return {
+    message: 'Success Get Cart By ID',
+    data: CartMappers.toDTO(cart),
+  };
+};
+
+export default { createCartService, getAllCartsCustomer, getByIdCartCustomer };
