@@ -1,8 +1,14 @@
 import LicensesKeyRepository from '../../../../infrastructure/repository/licensesKeyRepository/LicensesKeyRepository.js';
 import LicenseFactory from '../../../../domain/factory/Admin/LicensesKey.js';
 import LicensesKeyMappers from '../../../mappers/LicensesKeyMappers/LicensesKeyMappers.js';
+import ResponseError from '../../../../error/ResponseError.js';
+import * as CONSTANT from '../../../../configuration/Constant.js';
 
-const createLicensesKeyByAdmin = async (request) => {
+const createLicensesKeyByAdmin = async (actor, request) => {
+  if (!actor || actor.role !== CONSTANT.BASE_ROLE_ADMIN) {
+    throw new ResponseError(403, 'Forbidden: only admin can create license keys');
+  }
+
   const requestFactory = LicenseFactory.create(request);
   const create = await LicensesKeyRepository.create(requestFactory);
   const finalData = {
@@ -13,7 +19,10 @@ const createLicensesKeyByAdmin = async (request) => {
   return finalData;
 };
 
-const getAllLicensesKeyByAdmin = async (plainText = false) => {
+const getAllLicensesKeyByAdmin = async (actor, plainText = false) => {
+  if (!actor || actor.role !== CONSTANT.BASE_ROLE_ADMIN) {
+    throw new ResponseError(403, 'Forbidden: only admin can list all license keys');
+  }
   const data = await LicensesKeyRepository.findAllLicenses(plainText);
   const finalData = {
     message: 'License keys retrieved successfully',
@@ -22,7 +31,11 @@ const getAllLicensesKeyByAdmin = async (plainText = false) => {
   return finalData;
 };
 
-const getByIdLicensesKeyByAdmin = async (dataId, plainText = false) => {
+const getByIdLicensesKeyByAdmin = async (actor, dataId, plainText = false) => {
+  if (!actor || actor.role !== CONSTANT.BASE_ROLE_ADMIN) {
+    throw new ResponseError(403, 'Forbidden: only admin can access license by id');
+  }
+
   const data = await LicensesKeyRepository.findById(dataId, plainText);
   if (!data) {
     return {
@@ -37,7 +50,11 @@ const getByIdLicensesKeyByAdmin = async (dataId, plainText = false) => {
   return finalData;
 };
 
-const updateLicensesKeyByAdmin = async (dataId, request) => {
+const updateLicensesKeyByAdmin = async (actor, dataId, request) => {
+  if (!actor || actor.role !== CONSTANT.BASE_ROLE_ADMIN) {
+    throw new ResponseError(403, 'Forbidden: only admin can update license keys');
+  }
+
   // Pastikan data lama ada
   const existingLicense = await LicensesKeyRepository.findById(dataId);
   if (!existingLicense) {
@@ -58,8 +75,15 @@ const updateLicensesKeyByAdmin = async (dataId, request) => {
   return finalData;
 };
 
-const removeLicensesByAdmin = async (dataId, plainText = false) => {
+const removeLicensesByAdmin = async (actor, dataId, plainText = false) => {
+  if (!actor || actor.role !== CONSTANT.BASE_ROLE_ADMIN) {
+    throw new ResponseError(403, 'Forbidden: only admin can delete license keys');
+  }
+
   const findLicenses = await LicensesKeyRepository.findById(dataId, plainText);
+  if (!findLicenses) {
+    throw new ResponseError(404, 'License key not found');
+  }
   const deleteLicenses = await LicensesKeyRepository.remove(dataId);
   const finalData = {
     message: 'delete licenses by admin successfully',

@@ -13,6 +13,10 @@ export default class LicensesKeyRepository {
         activationLimit: true,
         status: true,
         soldAt: true,
+        ownerId: true,
+        iid: true,
+        activatedBy: true,
+        activatedAt: true,
         productId: true,
         product: {
           select: {
@@ -38,6 +42,10 @@ export default class LicensesKeyRepository {
         activationLimit: true,
         status: true,
         soldAt: true,
+        ownerId: true,
+        iid: true,
+        activatedBy: true,
+        activatedAt: true,
         productId: true,
         product: {
           select: {
@@ -75,6 +83,47 @@ export default class LicensesKeyRepository {
     return result;
   }
 
+  static async findByOwner(userId, plainText = false) {
+    const licenses = await PrismaClient.licensesKey.findMany({
+      where: { ownerId: userId },
+      select: {
+        id: true,
+        encryptedKey: true,
+        keyHash: true,
+        activationLimit: true,
+        status: true,
+        soldAt: true,
+        ownerId: true,
+        iid: true,
+        activatedBy: true,
+        activatedAt: true,
+        productId: true,
+        product: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+
+    const result = [];
+    for (const license of licenses) {
+      let plainTextValue = null;
+      if (plainText) {
+        plainTextValue = LicensesHelper.decryptedKey(license.encryptedKey);
+      }
+      result.push(
+        new LicenseKeyEntity({
+          ...license,
+          plainText: plainTextValue,
+        })
+      );
+    }
+
+    return result;
+  }
+
   static async findById(dataId, plainText = false) {
     const license = await PrismaClient.licensesKey.findUnique({
       where: { id: dataId },
@@ -85,6 +134,10 @@ export default class LicensesKeyRepository {
         activationLimit: true,
         status: true,
         soldAt: true,
+        ownerId: true,
+        iid: true,
+        activatedBy: true,
+        activatedAt: true,
         productId: true,
         product: {
           select: {
@@ -120,6 +173,10 @@ export default class LicensesKeyRepository {
         activationLimit: true,
         status: true,
         soldAt: true,
+        ownerId: true,
+        iid: true,
+        activatedBy: true,
+        activatedAt: true,
         productId: true,
         product: {
           select: {

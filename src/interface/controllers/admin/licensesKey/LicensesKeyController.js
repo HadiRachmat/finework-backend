@@ -3,7 +3,7 @@ import LicensesKeyService from '../../../../application/services/admin/licensesK
 const create = async (req, res, next) => {
   const request = req.body;
   try {
-    const response = await LicensesKeyService.createLicensesKeyByAdmin(request);
+    const response = await LicensesKeyService.createLicensesKeyByAdmin(req.user, request);
     res.status(201).json({
       status: 'success',
       data: response,
@@ -15,7 +15,7 @@ const create = async (req, res, next) => {
 
 const get = async (req, res, next) => {
   try {
-    const result = await LicensesKeyService.getAllLicensesKeyByAdmin(true);
+    const result = await LicensesKeyService.getAllLicensesKeyByAdmin(req.user, true);
     return res.status(200).json({
       status: 'get all data Licenses',
       data: result,
@@ -28,7 +28,7 @@ const get = async (req, res, next) => {
 const getById = async (req, res, next) => {
   const id = Number(req.params.id);
   try {
-    const result = await LicensesKeyService.getByIdLicensesKeyByAdmin(id, true);
+    const result = await LicensesKeyService.getByIdLicensesKeyByAdmin(req.user, id, true);
     return res.status(200).json({
       status: 'get data Licenses By Id',
       data: result,
@@ -42,7 +42,7 @@ const update = async (req, res, next) => {
   const dataId = Number(req.params.id);
   const request = req.body;
   try {
-    const result = await LicensesKeyService.updateLicensesKeyByAdmin(dataId, request);
+    const result = await LicensesKeyService.updateLicensesKeyByAdmin(req.user, dataId, request);
     res.status(200).json({
       code: 200,
       message: 'update Licenses key',
@@ -56,7 +56,7 @@ const update = async (req, res, next) => {
 const remove = async (req, res, next) => {
   const dataId = Number(req.params.id);
   try {
-    const result = await LicensesKeyService.removeLicensesByAdmin(dataId, false);
+    const result = await LicensesKeyService.removeLicensesByAdmin(req.user, dataId, false);
     res.status(200).json({
       code: 200,
       message: 'delete Licenses Key',

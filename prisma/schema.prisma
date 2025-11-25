@@ -89,12 +89,18 @@ model LicensesKey {
   createdAt       DateTime  @default(now()) @db.Timestamp(6)
   updatedAt       DateTime  @updatedAt @db.Timestamp(6)
 
+  // New fields for ownership/activation
+  ownerId     Int?      @db.Integer
+  iid         String?   @db.VarChar(255) // store hashed IID
+  activatedBy Int?      @db.Integer
+  activatedAt DateTime? @db.Timestamp(6)
+
   //Relations
   productId  Int       @db.Integer
   product    Products  @relation(fields: [productId], references: [id])
   supplierId Int?      @db.Integer
   supplier   supplier? @relation(fields: [supplierId], references: [id])
-
+  
   @@map("licenses_key")
 }
 

@@ -8,6 +8,7 @@ import ContactControllers from '../../controllers/customer/contact/ContactContro
 import ProductController from '../../controllers/customer/product/ProductController.js';
 import OrderCustomerController from '../../controllers/customer/orders/ordersController.js';
 import CartController from '../../controllers/customer/cart/CartController.js';
+import LicensesKeyController from '../../controllers/customer/licensesKey/LicensesKeyController.js';
 const CustomerRoutes = express.Router();
 
 //=============== USER MANAGEMENT ================ //
@@ -96,6 +97,37 @@ CustomerRoutes.get(
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
   ProductController.getById
+);
+
+//  ================ LICENSES MANAGEMENT ================  //
+//  ====================================================  //
+/**
+ * @route   GET /api/user/customer/licenses
+ * @route   GET /api/user/customer/licenses/:id
+ * @route   POST /api/user/customer/licenses/:id/activate
+ * @desc    Get licenses owned by customer and activate
+ * @access  Customer Only
+ */
+CustomerRoutes.get(
+  '/api/user/customer/licenses',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  LicensesKeyController.getAll
+);
+
+CustomerRoutes.get(
+  '/api/user/customer/licenses/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  LicensesKeyController.getById
+);
+
+CustomerRoutes.post(
+  '/api/user/customer/licenses/:id/activate',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  upload.none(),
+  LicensesKeyController.activate
 );
 
 //  ================ CATEGORIES MANAGEMENT ================  //
