@@ -1,12 +1,13 @@
 import LicensesKeyRepository from '../../../../infrastructure/repository/licensesKeyRepository/LicensesKeyRepository.js';
 import LicensesKeyMappers from '../../../mappers/LicensesKeyMappers/LicensesKeyMappers.js';
 import ResponseError from '../../../../error/ResponseError.js';
+import * as CONSTANT from '../../../../configuration/Constant.js';
 import crypto from 'crypto';
 
 const getLicensesForCustomer = async (actor, targetUserId, plainText = false) => {
   if (!actor) throw new ResponseError(401, 'Unauthorized');
   // customer can only access their own licenses; admin can access any user
-  if (actor.role !== 'admin' && String(actor.id) !== String(targetUserId)) {
+  if (actor.role !== CONSTANT.BASE_ROLE_ADMIN && String(actor.id) !== String(targetUserId)) {
     throw new ResponseError(403, 'Forbidden: cannot access other user licenses');
   }
 
@@ -28,7 +29,7 @@ const activateLicenseByCustomer = async (actor, licenseId, iid) => {
     throw new ResponseError(404, 'License not found');
   }
 
-  if (actor.role !== 'admin' && String(license.ownerId) !== String(actor.id)) {
+  if (actor.role !== CONSTANT.BASE_ROLE_ADMIN && String(license.ownerId) !== String(actor.id)) {
     throw new ResponseError(403, 'Forbidden: license does not belong to user');
   }
 
@@ -39,12 +40,12 @@ const activateLicenseByCustomer = async (actor, licenseId, iid) => {
 
   const hashedIid = crypto.createHash('sha256').update(iid).digest('hex');
 
-  if (license.status === 'activated' && license.iid && license.iid !== hashedIid) {
+  if (license.status === CONSTANT.BASE_STATUS_ACTIVE && license.iid && license.iid !== hashedIid) {
     throw new ResponseError(409, 'License already activated with a different IID');
   }
 
   const payload = {
-    status: 'activated',
+    status: CONSTANT.BASE_STATUS_ACTIVE,
     iid: hashedIid,
     activatedBy: actor.id,
     activatedAt: new Date(),
@@ -64,7 +65,7 @@ const getLicenseByIdForCustomer = async (actor, licenseId, plainText = false) =>
   const license = await LicensesKeyRepository.findById(licenseId, plainText);
   if (!license) return { message: 'License key not found', data: null };
 
-  if (actor.role !== 'admin' && String(license.ownerId) !== String(actor.id)) {
+  if (actor.role !== CONSTANT.BASE_ROLE_ADMIN && String(license.ownerId) !== String(actor.id)) {
     throw new ResponseError(403, 'Forbidden: cannot access this license');
   }
 

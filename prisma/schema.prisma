@@ -29,6 +29,7 @@ model Users {
   testimonials Testimonials[]
   orders       Orders[]
   cart         Carts[]
+  licensesKeys LicensesKey[]
 
   @@map("users")
 }
@@ -91,6 +92,7 @@ model LicensesKey {
 
   // New fields for ownership/activation
   ownerId     Int?      @db.Integer
+  owner       Users?    @relation(fields: [ownerId], references: [id])
   iid         String?   @db.VarChar(255) // store hashed IID
   activatedBy Int?      @db.Integer
   activatedAt DateTime? @db.Timestamp(6)
@@ -100,7 +102,7 @@ model LicensesKey {
   product    Products  @relation(fields: [productId], references: [id])
   supplierId Int?      @db.Integer
   supplier   supplier? @relation(fields: [supplierId], references: [id])
-  
+
   @@map("licenses_key")
 }
 

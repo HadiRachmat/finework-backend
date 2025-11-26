@@ -9,6 +9,9 @@ export default class LicensesKeyDTO {
     activationLimit,
     status,
     soldAt,
+    ownerId = null,
+    activatedBy = null,
+    activatedAt = null,
     productId,
     product,
     supplierId,
@@ -20,8 +23,11 @@ export default class LicensesKeyDTO {
     this.activationLimit = activationLimit;
     this.status = status;
     this.soldAt = soldAt;
+    this.ownerId = ownerId;
+    this.activatedBy = activatedBy;
+    this.activatedAt = activatedAt;
     this.productId = productId;
-    this.product = product ? new ProductDTO(product) : null;;
+    this.product = product ? new ProductDTO(product) : null;
     this.supplierId = supplierId;
   }
 
@@ -34,6 +40,9 @@ export default class LicensesKeyDTO {
       activationLimit: entity.getActivationLimit(),
       status: entity.getStatus(),
       soldAt: entity.getSoldAt(),
+      ownerId: entity.getOwnerId(),
+      activatedBy: entity.getActivatedBy(),
+      activatedAt: entity.getActivatedAt(),
       productId: entity.getProductId(),
       product: entity.getProduct(),
       supplierId: entity.getSupplier(),
