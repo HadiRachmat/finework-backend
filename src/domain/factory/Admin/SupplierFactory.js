@@ -22,14 +22,20 @@ export default class SupplierFactory {
     });
   }
 
-  static update({ id, name, contact }) {
-    const supplierNameVo = new Name(name);
-    const supplierContactVo = new Contact(contact);
+  static update({ id, supplierName, contactPerson, email, phoneNumber }) {
+   const cleanContact = typeof contactPerson === 'string' ? contactPerson.trim() : ContactPerson;
 
-    return new SupplierEntity({
-      id: id,
-      name: supplierNameVo.name,
-      contact: supplierContactVo.contact,
-    });
+   const supplierNameVo = new SupplierName(supplierName);
+   const contactPersonVo = new ContactPerson(cleanContact);
+   const emailVo = new Email(email);
+   const phoneNumberVo = new PhoneNumber(phoneNumber);
+
+   return new SupplierEntity({
+     id,
+     supplierName: supplierNameVo.supplierName,
+     contactPerson: contactPersonVo.contactPerson,
+     email: emailVo.email,
+     phoneNumber: phoneNumberVo.phoneNumber,
+   });
   }
 }

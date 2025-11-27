@@ -20,9 +20,11 @@ const createCartService = async (userId, request) => {
     throw new ResponseError(404, `Product with ID ${request.productId} not found`);
   }
 
-  if(product.getStock() !== nul && product.getStock() < request.quantity)  {
+  if(product.getStock() !== null && product.getStock() < request.quantity)  {
     throw new ResponseError(400, `Insufficient stock for Product ID ${request.productId}`);
   }
+
+  
 };
 
 const getAllCartsCustomer = async (userId) => {

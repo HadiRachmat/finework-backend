@@ -56,9 +56,6 @@ const getUserById = async (userId) => {
   }
 
   const getAttachment = await AttachmentRepository.findByAttachmentAble(user.getId(), 'user');
-  if (!getAttachment) {
-    return null;
-  }
   const finalData = {
     message: 'User retrieved successfully',
     user: user,
