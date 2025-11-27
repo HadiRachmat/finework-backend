@@ -1,5 +1,7 @@
 import PrismaClient from '../../prisma/index.js';
 import ProductRepository from '../productsRepository/ProductRepository.js';
+import CartEntity from '../../../domain/entities/CartEntity/CartEntity.js';
+import CartItemsEntity from '../../../domain/entities/CartItemsEntity/CartItemsEntity.js';
 
 export default class CartRepository {
   // ambil cart items untuk user; karena model CartItems tidak mendefinisikan relation `product`
@@ -45,6 +47,40 @@ export default class CartRepository {
     );
 
     return itemsWithProduct;
+  }
+
+  static async createCart(tx, cartRequest) {
+    const newCart = await tx.carts.create({
+      data: cartRequest,
+      select: {
+        id: true,
+        userId: true,
+        status: true,
+        cartItems: true,
+        user: {
+          select: {
+            id: true,
+            fullname: true,
+            email: true,
+          },
+        }
+      },
+    });
+    return newCart ? new CartEntity(newCart) : null;
+  }
+
+  static async createCartItem(tx, cartItemRequest) {
+    const newCartItem = await tx.cartItems.create({
+      data: cartItemRequest,
+      select: {
+        id: true,
+        quantity: true,
+        price: true,
+        productId: true,
+        cartId: true,
+      },
+    });
+    return newCartItem ? new CartItemsEntity(newCartItem) : null;
   }
 
   // hapus semua cartItems untuk user dalam transaksi (tx required)

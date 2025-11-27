@@ -65,7 +65,7 @@ CustomerRoutes.get(
   ContactControllers.getByUserId
 );
 CustomerRoutes.put(
-  '/api/user/customer/contact/:id/update',
+  '/api/user/customer/contact/update',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
   upload.none(),

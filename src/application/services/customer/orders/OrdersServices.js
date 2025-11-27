@@ -21,7 +21,7 @@ const createCurrentOrderByCustomer = async (userId, request) => {
     product, // ✅ kirim seluruh objek product
     quantity: request.quantity,
   });
-
+  
   const orderRequestFactory = OrderFactory.create({
     userId,
     status: request.status,

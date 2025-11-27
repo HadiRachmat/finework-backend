@@ -31,7 +31,7 @@ const getProdcutByCustomer = async () => {
 const getProductByIdWithCustomer = async (productId) => {
   const product = await ProductRespository.findById(productId);
   if (!product) {
-    throw new ResponseError('Product not found', 404);
+    throw new ResponseError(404, 'Product not found');
   }
   const attachments = await AttachmentRepository.findAllAttachment(
     product.getId(),

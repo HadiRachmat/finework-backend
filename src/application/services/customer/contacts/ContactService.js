@@ -4,6 +4,11 @@ import ContactMappers from '../../../mappers/contactMappers/ContactMappers.js';
 import ResponseError from '../../../../error/ResponseError.js';
 
 const createContactByCustomer = async (userId, request) => {
+  const existingContactCustomer = await ContactRepository.findFirstByUserId(userId);
+  if (existingContactCustomer) {
+    throw new ResponseError(400, 'Contact for this user already exists');
+  }
+  
   const contactFactory = ContactFactory.create({
     ...request,
     userId: userId,

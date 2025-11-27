@@ -6,14 +6,21 @@ import Status from '../../valuesObjects/CartVo/Status.js';
 import UserId from '../../valuesObjects/CartVo/UserId.js';
 
 export default class CartsFactory {
-  static createCart({ id, userId, status }) {
+  static createCart({ id, userId, status, user, cartItems } = {}) {
     // 🏗️ Bentuk entity Cart utama
-    return new CartEntity({
+    // Jangan selalu sertakan `cartItems` sebagai array kosong — biarkan undefined
+    // sehingga repository tidak akan meneruskan nested empty array ke Prisma.
+    const payload = {
       id,
-      userId: new UserId(userId).userId,
       status: new Status(status).status,
-      // cartItems: cartItems,
-    });
+      user,
+    };
+
+    if (typeof userId !== 'undefined') payload.userId = new UserId(userId).userId;
+
+    if (typeof cartItems !== 'undefined') payload.cartItems = cartItems;
+
+    return new CartEntity(payload);
   }
 
   static createCartItem({ id, productId, quantity, price }) {
