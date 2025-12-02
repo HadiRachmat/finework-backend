@@ -66,6 +66,22 @@ export default class OrderRepository {
       : null;
   }
 
+  static async findOrderByIdWithoutTx (orderId ) {
+    const order = await PrismaClient.orders.findUnique({
+      where: {
+        id: orderId,
+      },
+      select: {
+        id: true,
+        amount: true,
+        status: true,
+        userId: true,
+      }
+    });
+
+    return order ? new OrdersEntity(order) : null;
+  }
+
   static async FindAllOrder() {
     const orders = await PrismaClient.orders.findMany({
       select: {

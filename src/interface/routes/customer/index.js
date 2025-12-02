@@ -9,6 +9,7 @@ import ProductController from '../../controllers/customer/product/ProductControl
 import OrderCustomerController from '../../controllers/customer/orders/ordersController.js';
 import CartController from '../../controllers/customer/cart/CartController.js';
 import LicensesKeyController from '../../controllers/customer/licensesKey/LicensesKeyController.js';
+import PaymentController from '../../controllers/customer/payments/PaymentController.js';
 const CustomerRoutes = express.Router();
 
 //=============== USER MANAGEMENT ================ //
@@ -224,18 +225,24 @@ CustomerRoutes.delete('/api/user/customer/cart/:id/delete', (req, res, next) => 
  * @desc    Create and Get paymentby customer
  * @access  Customer Only
  */
-CustomerRoutes.post('/api/user/customer/payments/create', (req, res, next) => {
-  res.status(200).json({ message: 'create payment by customer is under constructor' });
-  next();
-});
-CustomerRoutes.get('/api/user/customer/payments', (req, res, next) => {
-  res.status(200).json({ message: 'get all payments by customer is under constructor' });
-  next();
-});
-CustomerRoutes.get('/api/user/customer/payments/:id', (req, res, next) => {
-  res.status(200).json({ message: 'get by id payments by customer is under constructor' });
-  next();
-});
+CustomerRoutes.post(
+  '/api/user/customer/payments/create',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  PaymentController.create
+);
+CustomerRoutes.get(
+  '/api/user/customer/payments',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  PaymentController.get
+);
+CustomerRoutes.get(
+  '/api/user/customer/payments/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  PaymentController.getById
+);
 
 //  ================ PAYMENT CONFIRMATION MANAGEMENT ================  //
 //  ================================================================  //
