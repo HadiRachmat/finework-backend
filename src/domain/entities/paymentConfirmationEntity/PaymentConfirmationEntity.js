@@ -1,9 +1,8 @@
 export default class PaymentConfirmationEntity {
-  constructor ({id, bankName, bankAccountName, bankAccountNumber, code, status, paymentId, payment} ={}) {
+  constructor ({id, bankName, bankAccountName, code, status, paymentId, payment} ={}) {
     this.id = id;
     this.bankName = bankName;
     this.bankAccountName = bankAccountName;
-    this.bankAccountNumber = bankAccountNumber;
     this.code = code;
     this.status = status;
     this.paymentId = paymentId;
@@ -17,9 +16,6 @@ export default class PaymentConfirmationEntity {
   }
   getBankAccountName() {
     return this.bankAccountName;
-  }
-  getBankAccountNumber() {
-    return this.bankAccountNumber;
   }
   getCode() {
     return this.code;

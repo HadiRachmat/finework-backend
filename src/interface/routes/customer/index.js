@@ -10,6 +10,7 @@ import OrderCustomerController from '../../controllers/customer/orders/ordersCon
 import CartController from '../../controllers/customer/cart/CartController.js';
 import LicensesKeyController from '../../controllers/customer/licensesKey/LicensesKeyController.js';
 import PaymentController from '../../controllers/customer/payments/PaymentController.js';
+import PaymentConfirmationController from '../../controllers/customer/paymentConfirmation/PaymentConfirmationController.js';
 const CustomerRoutes = express.Router();
 
 //=============== USER MANAGEMENT ================ //
@@ -253,10 +254,14 @@ CustomerRoutes.get(
  * @desc    Create and Get payment confirmation by customer
  * @access  Customer Only
  */
-CustomerRoutes.post('/api/user/customer/payment-confirmations/create', (req, res, next) => {
-  res.status(200).json({ message: 'create payment confirmation by customer is under constructor' });
-  next();
-});
+CustomerRoutes.post(
+  '/api/user/customer/payment-confirmations/create',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  upload.array('attachments', 5),
+  PaymentConfirmationController.create
+  
+);
 CustomerRoutes.get('/api/user/customer/payment-confirmations', (req, res, next) => {
   res
     .status(200)
