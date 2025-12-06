@@ -10,6 +10,7 @@ import ProductController from '../../controllers/admin/product/ProductController
 import LicensesKeyController from '../../controllers/admin/licensesKey/LicensesKeyController.js';
 import SupplierController from '../../controllers/admin/supplier/SupplierController.js';
 import ContactController from '../../controllers/admin/contact/ContactsController.js';
+import PaymentConfirmationController from '../../controllers/admin/PaymentConfirmation/PaymentConfirmationController.js';
 
 const RouterAdmin = express.Router();
 
@@ -500,13 +501,10 @@ RouterAdmin.get(
 );
 
 RouterAdmin.put(
-  '/api/admin/payment-confirmations/:id/update',
+  '/api/admin/payment-confirmations/status/:id/update',
   AuthMiddleware,
   AuthRoleMiddleware(CONSTANT.BASE_ROLE_ADMIN),
-  (req, res, next) => {
-    res.status(200).json({ message: 'Update payment confirmation by admin is under constructor' });
-    next();
-  }
+  PaymentConfirmationController.updateStatus
 );
 
 RouterAdmin.delete(

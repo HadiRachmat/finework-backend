@@ -46,5 +46,80 @@ export default class PaymentConfirmationRepository {
         },
       },
     });
+    return paymentConfirmation ? new PaymentConfirmationEntity(paymentConfirmation) : null;
+  }
+
+  static async findAllPaymentConfirmation() {
+    const paymentConfirmations = await PrismaClient.paymentConfirmations.findMany({
+      select: {
+        id: true,
+        bankName: true,
+        bankAccountName: true,
+        code: true,
+        status: true,
+        paymentId: true,
+        payment: {
+          select: {
+            id: true,
+            amount: true,
+            status: true,
+          },
+        },
+      },
+    });
+    return paymentConfirmations
+      ? paymentConfirmations.map((pc) => new PaymentConfirmationEntity(pc))
+      : [];
+  }
+
+  static async findPaymentConfirmationById(paymentConfirmationId) {
+    const paymentConfirmation = await PrismaClient.paymentConfirmations.findUnique({
+      where: {
+        id: paymentConfirmationId,
+      },
+      select: {
+        id: true,
+        bankName: true,
+        bankAccountName: true,
+        code: true,
+        status: true,
+        paymentId: true,
+        payment: {
+          select: {
+            id: true,
+            amount: true,
+            status: true,
+          },
+        },
+      },
+    });
+    return paymentConfirmation ? new PaymentConfirmationEntity(paymentConfirmation) : null;
+  }
+
+  static async updatePaymentConfirmationStatusWithTx(tx, paymentConfirmationId, request) {
+    const updatedPaymentConfirmation = await tx.paymentConfirmations.update({
+      where: {
+        id: paymentConfirmationId,
+      },
+      data: request,
+      select: {
+        id: true,
+        bankName: true,
+        bankAccountName: true,
+        code: true,
+        status: true,
+        paymentId: true,
+        payment: {
+          select: {
+            id: true,
+            amount: true,
+            status: true,
+          },
+        },
+      },
+    });
+    return updatedPaymentConfirmation
+      ? new PaymentConfirmationEntity(updatedPaymentConfirmation)
+      : null;
   }
 }

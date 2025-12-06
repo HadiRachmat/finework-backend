@@ -260,20 +260,19 @@ CustomerRoutes.post(
   AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
   upload.array('attachments', 5),
   PaymentConfirmationController.create
-  
 );
-CustomerRoutes.get('/api/user/customer/payment-confirmations', (req, res, next) => {
-  res
-    .status(200)
-    .json({ message: 'get all payment confirmations by customer is under constructor' });
-  next();
-});
-CustomerRoutes.get('/api/user/customer/payment-confirmations/:id', (req, res, next) => {
-  res
-    .status(200)
-    .json({ message: 'get by id payment confirmations by customer is under constructor' });
-  next();
-});
+CustomerRoutes.get(
+  '/api/user/customer/payment-confirmations',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  PaymentConfirmationController.getAll
+);
+CustomerRoutes.get(
+  '/api/user/customer/payment-confirmations/:id',
+  AuthMiddleware,
+  AuthRoleMiddleware(CONSTANTS.BASE_ROLE_CUSTOMER),
+  PaymentConfirmationController.getById
+);
 
 //  ================ TESTIMONIALS MANAGEMENT ================  //
 //  ======================================================  //

@@ -141,4 +141,27 @@ export default class PaymentRepository {
 
     return payment ? new PaymentEntity(payment) : null;
   }
+
+  static async updateStatusPaymentWithTx(tx, id, updateRequest) {
+    const updatePayment = await tx.payments.update({
+      where: {
+        id: id,
+      },
+      data: updateRequest,
+      select: {
+        id: true,
+        amount: true,
+        method: true,
+        code: true,
+        status: true,
+        order: {
+          select: {
+            id: true,
+            amount: true,
+          },
+        },
+      },
+    });
+    return updatePayment ? new PaymentEntity(updatePayment) : null;
+  }
 }

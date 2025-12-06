@@ -20,7 +20,34 @@ const create = async (req, res, next) => {
   }
 };
 
+const getAll = async (req, res, next) => {
+  try {
+    const result = await PaymentConfirmationService.getAllPaymentConfirmations();
+    res.status(200).json({
+      code: 200,
+      message: 'Payment confirmations retrieved successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
+const getById = async (req, res, next) => {
+  const id = Number(req.params.id);
+  try {
+    const result = await PaymentConfirmationService.getPaymentConfirmationById(id);
+    res.status(200).json({
+      code: 200,
+      message: 'Payment confirmation retrieved successfully',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export default {
-  create
-}
+  create,
+  getAll,
+  getById,
+};

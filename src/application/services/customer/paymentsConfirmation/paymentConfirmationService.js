@@ -97,7 +97,7 @@ const createPaymentConfirmationWithTx = async (actor, files, request = {}) => {
       tx,
       typeof findPayment.getId === 'function' ? findPayment.getId() : findPayment.id,
       CONSTANT.BASE_PAYMENT_STATUS_PENDING,
-      CONSTANT.BASE_PAYMENT_STATUS_COMPLETED
+      CONSTANT.BASE_PAYMENT_STATUS_PROCESSING
     );
 
     // if update failed (no rows updated) -> likely already processed (idempotent)
@@ -121,6 +121,29 @@ const createPaymentConfirmationWithTx = async (actor, files, request = {}) => {
     return finalData;
   });
 };
+
+const getAllPaymentConfirmations = async () => {
+  const paymentConfirmations = await PaymentConfirmationRepository.findAllPaymentConfirmation();
+  const finalData = {
+    message: 'Payment confirmations with customer retrieved successfully',
+    paymentConfirmations: paymentConfirmations.map((pc) => PaymentConfirmationMappers.toDTO(pc)),
+  };
+  return finalData;
+};
+
+const getPaymentConfirmationById = async (id) => {
+  const paymentConfirmation = await PaymentConfirmationRepository.findPaymentConfirmationById(id);
+  if (!paymentConfirmation) {
+    throw new ResponseError(404, 'Payment confirmation not found');
+  }
+  const finalData = {
+    message: 'Payment confirmation retrieved successfully',
+    paymentConfirmation: PaymentConfirmationMappers.toDTO(paymentConfirmation),
+  };
+  return finalData;
+};
 export default {
   createPaymentConfirmationWithTx,
+  getAllPaymentConfirmations,
+  getPaymentConfirmationById,
 };
