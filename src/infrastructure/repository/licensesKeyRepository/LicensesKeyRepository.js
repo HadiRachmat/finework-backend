@@ -4,8 +4,31 @@ import LicensesHelper from '../../../helpers/LicenseHelper.js';
 export default class LicensesKeyRepository {
   static async create(request) {
     const { plainText, ...dbData } = request;
+
+    // whitelist allowed fields for create to avoid passing relation objects or id/createdAt
+    const allowedFields = [
+      'encryptedKey',
+      'keyHash',
+      'activationLimit',
+      'status',
+      'soldAt',
+      'ownerId',
+      'iid',
+      'activatedBy',
+      'activatedAt',
+      'productId',
+      'supplierId',
+    ];
+
+    const data = {};
+    for (const key of allowedFields) {
+      if (Object.prototype.hasOwnProperty.call(dbData, key)) {
+        data[key] = dbData[key];
+      }
+    }
+
     const license = await PrismaClient.licensesKey.create({
-      data: dbData,
+      data: data,
       select: {
         id: true,
         encryptedKey: true,
@@ -51,6 +74,13 @@ export default class LicensesKeyRepository {
           select: {
             id: true,
             name: true,
+          },
+        },
+        supplierId: true,
+        supplier: {
+          select: {
+            id: true,
+            supplierName: true,
           },
         },
       },
@@ -163,9 +193,31 @@ export default class LicensesKeyRepository {
   static async update(id, request) {
     const { plainText, ...dbData } = request;
 
+    // whitelist allowed fields for update to avoid passing entire entity (including id/relations)
+    const allowedFields = [
+      'encryptedKey',
+      'keyHash',
+      'activationLimit',
+      'status',
+      'soldAt',
+      'ownerId',
+      'iid',
+      'activatedBy',
+      'activatedAt',
+      'productId',
+      'supplierId',
+    ];
+
+    const data = {};
+    for (const key of allowedFields) {
+      if (Object.prototype.hasOwnProperty.call(dbData, key)) {
+        data[key] = dbData[key];
+      }
+    }
+
     const license = await PrismaClient.licensesKey.update({
       where: { id },
-      data: dbData,
+      data,
       select: {
         id: true,
         encryptedKey: true,

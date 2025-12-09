@@ -10,7 +10,14 @@ const createLicensesKeyByAdmin = async (actor, request) => {
     throw new ResponseError(403, 'Forbidden: only admin can create license keys');
   }
 
-  const requestFactory = LicenseFactory.create(request);
+  const requestFactory = LicenseFactory.create({
+    plainText: request.plainText,
+    activationLimit: request.activationLimit,
+    status: request.status,
+    soldAt: request.soldAt,
+    productId: request.productId,
+    supplierId: request.supplierId,
+  });
   const create = await LicensesKeyRepository.create(requestFactory);
   const finalData = {
     message: 'License key created successfully',

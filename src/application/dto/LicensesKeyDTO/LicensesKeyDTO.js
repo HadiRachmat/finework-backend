@@ -15,6 +15,7 @@ export default class LicensesKeyDTO {
     productId,
     product,
     supplierId,
+    supplier,
   }) {
     this.id = id;
     this.encryptedKey = encryptedKey;
@@ -29,6 +30,7 @@ export default class LicensesKeyDTO {
     this.productId = productId;
     this.product = product ? new ProductDTO(product) : null;
     this.supplierId = supplierId;
+    this.supplier = supplier;
   }
 
   static fromEntity(entity) {
@@ -45,7 +47,24 @@ export default class LicensesKeyDTO {
       activatedAt: entity.getActivatedAt(),
       productId: entity.getProductId(),
       product: entity.getProduct(),
-      supplierId: entity.getSupplier(),
+      supplierId: entity.getSupplierId(),
+      supplier: entity.getSupplier(),
+    });
+  }
+
+  static fromEntityCustomer(entity) {
+    return new LicensesKeyDTO({
+      id: entity.getId(),
+      encryptedKey: entity.getEncryptedKey(),
+      keyHash: entity.getKeyHash(),
+      plainText: entity.getPlainText(),
+      status: entity.getStatus(),
+      soldAt: entity.getSoldAt(),
+      ownerId: entity.getOwnerId(),
+      activatedBy: entity.getActivatedBy(),
+      activatedAt: entity.getActivatedAt(),
+      productId: entity.getProductId(),
+      product: entity.getProduct(),
     });
   }
 }

@@ -56,14 +56,6 @@ export default class CartRepository {
         id: true,
         userId: true,
         status: true,
-        cartItems: true,
-        user: {
-          select: {
-            id: true,
-            fullname: true,
-            email: true,
-          },
-        }
       },
     });
     return newCart ? new CartEntity(newCart) : null;

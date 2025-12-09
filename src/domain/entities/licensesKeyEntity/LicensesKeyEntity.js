@@ -9,7 +9,8 @@ export default class LicenseKeyEntity {
     soldAt,
     productId = null,
     product,
-    supplierId = [],
+    supplierId,
+    supplier = [],
     ownerId = null,
     iid = null,
     activatedBy = null,
@@ -25,6 +26,7 @@ export default class LicenseKeyEntity {
     this.productId = productId || null;
     this.product = product;
     this.supplierId = supplierId || null;
+    this.supplier = supplier || [];
     this.ownerId = ownerId || null;
     this.iid = iid || null; // stored hashed IID
     this.activatedBy = activatedBy || null;
@@ -67,10 +69,14 @@ export default class LicenseKeyEntity {
     return this.product;
   }
 
-  getSupplier() {
+  getSupplierId() {
     return this.supplierId;
   }
 
+  getSupplier() {
+    return this.supplier;
+  }
+  
   getOwnerId() {
     return this.ownerId;
   }

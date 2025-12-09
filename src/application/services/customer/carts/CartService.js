@@ -82,8 +82,8 @@ const createCartService = async (userId, request) => {
   const finalData = {
     message: 'Success Create Cart',
     data: {
-      cart: CartMappers.toDTO(createCart.cart),
-      cartItem: CartItemMappers.toDTO(createCart.cartItem),
+      cart: CartMappers.getDTO(createCart.cart),
+      cartItems: CartItemMappers.toDTO(createCart.cartItem),
     },
   };
   return finalData;
@@ -93,7 +93,7 @@ const getAllCartsCustomer = async (userId) => {
   const carts = await CartsRepository.findAllCartsWithoutTx(userId);
   return {
     message: 'Success Get All Carts',
-    data: carts.map((cart) => CartMappers.toDTO(cart)),
+    data: carts.map((cart) => CartMappers.getDTO(cart)),
   };
 };
 

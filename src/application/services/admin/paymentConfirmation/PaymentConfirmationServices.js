@@ -28,7 +28,10 @@ const updatePaymentConfirmationStatusWithTx = async (paymentConfirmationId, requ
         requestPaymentConfirmationFactory
       );
     // also update the related payment status if needed
-    if (updatedPaymentConfirmation.status === CONSTANT.BASE_PAYMENT_STATUS_COMPLETED) {
+    if (
+      updatedPaymentConfirmation.status === CONSTANT.BASE_PAYMENT_STATUS_COMPLETED ||
+      updatedPaymentConfirmation.status === CONSTANT.BASE_PAYMENT_STATUS_PROCESSING
+    ) {
       const paymentUpdateRequest = PaymentFactory.updateStatusPaymentRequest(
         CONSTANT.BASE_PAYMENT_STATUS_COMPLETED
       );

@@ -14,7 +14,7 @@ const getLicensesForCustomer = async (actor, targetUserId, plainText = false) =>
   const data = await LicensesKeyRepository.findByOwner(targetUserId, plainText);
   return {
     message: 'User licenses retrieved successfully',
-    data: data.map((item) => LicensesKeyMappers.toDTO(item)),
+    data: data.map((item) => LicensesKeyMappers.toDTOCustomer(item)),
   };
 };
 

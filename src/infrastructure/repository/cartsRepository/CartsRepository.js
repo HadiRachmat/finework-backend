@@ -9,7 +9,6 @@ export default class CartsRepository {
         id: true,
         status: true,
         userId: true,
-        cartItems: true,
       },
     });
 
@@ -25,7 +24,13 @@ export default class CartsRepository {
         id: true,
         status: true,
         userId: true,
-        cartItems: true,
+        cartItems: {
+          select: {
+            id: true,
+            quantity: true,
+            price: true,
+          },
+        },
       },
     });
     return carts ? carts.map((cart) => new CartEntity(cart)) : [];
@@ -40,8 +45,13 @@ export default class CartsRepository {
       select: {
         id: true,
         status: true,
-        userId: true,
-        cartItems: true,
+        cartItems: {
+          select: {
+            id: true,
+            quantity: true,
+            price: true,
+          }
+        }
       },
     });
 
@@ -57,7 +67,7 @@ export default class CartsRepository {
         id: true,
         status: true,
         userId: true,
-        cartItems: true,
+        // cartItems: true,
       },
     });
 
